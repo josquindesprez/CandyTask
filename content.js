@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Determine the appropriate image
     let imageUrl;
     if (currentHour >= dawnStart && currentHour < dayStart) {
-        imageUrl = './milano/milano1.png';
+        imageUrl = './milano/milano1.jpg';
     } else if (currentHour >= dayStart && currentHour < sunsetStart) {
-        imageUrl = './milano/milano6.png';
+        imageUrl = './milano/milano6.jpg';
     } else if (currentHour >= sunsetStart && currentHour < nightStart) {
-        imageUrl = './milano/milano3.png';
+        imageUrl = './milano/milano3.jpg';
     } else {
-        imageUrl = './milano/milano4.png';
+        imageUrl = './milano/milano4.jpg';
     }
 
     // Set the background image of the body
@@ -618,7 +618,7 @@ function deleteTaskList(taskListName) {
 function showNotification(message) {
     chrome.notifications.create({
         type: 'basic',
-        iconUrl: 'icon.png',  // Path to the icon for the notification
+        iconUrl: 'icon.jpg',  // Path to the icon for the notification
         title: 'My Extension Notification',
         message: message
     });
