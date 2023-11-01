@@ -1,0 +1,319 @@
+html{overflow: hidden;}
+
+body{
+  /* background-image: url('./milano/milano3 (12).png');*/
+   background-size: cover;
+   max-width: 800px;
+   max-height: 600px;
+
+}
+
+#panel{
+    border:none;
+    outline:none;
+    box-shadow:none;}
+
+#timerSection {
+      display: none;
+    }
+
+.popup {
+      width: 800px;
+      height: 600px;
+      overflow: hidden;    
+  }
+
+
+.bbody {
+      /*background-image: url('xmas.gif');
+      background-size: cover;*/
+      margin: 0;
+      padding: 0;
+      
+    }
+    
+.background{
+   background-color: yellow;
+   z-index: -1;
+   top:0;
+   left:0;
+   width: 100%;
+   height: 100%;
+    }
+
+.marker{
+font-family: 'Permanent Marker', cursive;
+
+}
+
+
+.emilys{
+ font-family: 'Emilys Candy'; 
+ font-color:white;
+}
+
+
+.tilt{
+     font-family: 'Tilt Prism';}
+
+
+.neue {
+     font-family: 'Comic neue';
+}
+
+.neonbutton{
+     font-family: 'Courier new', monospace;
+     text-transform: uppercase;
+     font-size: 2rem; 
+     word-spacing: 0em;
+     opacity: 1;
+     color: white;
+     text-shadow: 0 0 5px black;
+     border:none;
+     background: none;
+     outline:none;
+     margin: 5px;
+
+ }
+
+#removeTaskButton:hover{
+    color:red;
+    opacity:1;
+    text-shadow: 0 0 5px red;}
+
+#addTaskButton:hover{
+    color:#07a802;
+    opacity:1;
+    text-shadow: 0 0 5px #6bdb67;
+
+}
+
+@keyframes blink {
+    0% { text-shadow: 0 0 15px red; }
+    50% { text-shadow: none; }
+    100% { text-shadow: 0 0 15px red; }
+}
+
+@-webkit-keyframes blink {
+    0% { text-shadow: 0 0 15px red; }
+    50% { text-shadow: 0 0 0; }
+    100% { text-shadow: 0 0 15px red; }
+}
+
+@-webkit-keyframes glowing {
+  0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+
+@keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+.removeTaskButton{
+  margin: 15px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: none;
+  outline:none;
+  margin: 0 auto;
+  
+  background-color: red; 
+  border-radius: 50%;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+.removeTaskButton:hover{
+    
+}
+
+.inputneon{
+    height: 2rem;
+    border: none;
+    outline:none;
+    background-color:transparent;
+    
+}
+
+.inputneon:focus{
+    border:none;
+    outline:none;
+    border-bottom: solid #6bf;}
+
+#addTaskList{
+     font-family: 'Comic neue';
+     text-transform: uppercase;
+     font-size: 1.3rem; 
+     word-spacing: 0em;
+     opacity: 1;
+     color: black;
+     text-shadow: 0 0 5px #6bf;
+     border:none;
+     background: none;
+     outline:none
+
+
+ }
+
+
+#addTaskList:hover {
+     font-family: 'Comic neue';
+     text-transform: uppercase;
+     
+     word-spacing: 0em;
+     opacity: 1;
+     color: #0af;
+     text-shadow: 0 0 5px #6bf;
+}
+
+
+
+#taskList {
+  max-height: 200px;
+ /* overflow-y: auto;*/
+}
+
+
+.task-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.circular-input {
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  font-size: 2rem;
+  padding: 0.5rem;
+}
+
+.circular {
+  width: 150px;
+  height: 150px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 2rem;
+}
+
+
+
+.circle {
+    background: lightblue;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+
+.confini {
+     
+border: 1px solid black; 
+
+}
+
+
+.sfondo {
+    
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+
+#hasfondobianco {
+    background-color : white;}
+
+.my-text:hover {
+  
+  animation: bounce;
+  animation-duration: 2s;
+}
+
+.onhoversfondo:hover .my-text{
+   animation: pulse 2s;
+
+.onhoversfondo:hover{
+    background-color:lightgrey;}
+
+.nascondi{
+    visibility: hidden; 
+}
+
+.mostra{
+    display: block;
+}
+
+.bar{
+    background-color: yellow;}
+
+.neoncourier {
+    
+    text-transform: uppercase;
+    font-size: 2em;
+    word-spacing: 0em;
+    opacity: 1;
+    color: #0af;
+    text-shadow: 0 0 5px #6bf;
+    font-family: 'Courier New', monospace;
+ 
+
+}
+
+.gradient-div {
+      background: linear-gradient(to left, white 0%, white 20%, red 20%, red 80%, white 80%, white 100%);
+      
+    }
+
+#timerModal .modal-background{
+    width: 800px !important; 
+    height: 600px !important;
+
+}
+    
+/* Your Custom CSS file (e.g., stile.css) */
+#timerModal .modal-card {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  max-width:800px !important;
+}
+
+#timerModal .modal-card-head,
+#timerModal .modal-card-foot,
+#timerModal .modal-card-body {
+  background-color: transparent !important;
+}
+
+#timerModal .modal-card-body .field .label {
+  color: #fff !important;
+}
+
+#timerModal .modal-card-body .input {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+

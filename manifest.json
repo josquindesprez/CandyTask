@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "CandyTask",
+  "description": "A bit of sweet for bitter chores",
+  "version": "1.0",
+  
+  "permissions": [
+    "history",
+    "storage",
+    "activeTab", 
+    "scripting",
+    "tabs",
+    "notifications"
+  ],
+  "action": {
+    "default_popup": "hello.html",
+    "default_icon": {
+      "16": "1.png",
+      "48": "1.png",
+      "128": "1.png"
+    }
+  },
+  "icons": {
+    "16": "1.png",
+    "48": "1.png",
+    "128": "1.png"
+  },
+"content_scripts": [
+  {
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }
+]
+
+  }
+

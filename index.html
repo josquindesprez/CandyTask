@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sofiex</title>
+  
+  <script src="jquery.js"></script> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">      
+  <link rel="stylesheet" href="stile.css">
+  <!--link rel="stylesheet" href="style.css"-->
+  <link rel="stylesheet" href="style1.css">
+  <!--link rel="stylesheet" href="scrollingback.css"-->
+  <link rel="stylesheet" href="wordclock.css"> 
+  <link rel="stylesheet" href="trash.css">     
+  <!--link rel="stylesheet" href="background.css"-->
+  <!--link rel="stylesheet" href="infiniteback.css">
+  <!--link rel="stylesheet" href="paperpin.css"-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Emilys+Candy&family=Permanent+Marker&family=Tilt+Prism&display=swap" rel="stylesheet"> 
+
+
+
+
+
+ 
+</head>
+<body >
+
+<!--div class="date-bg" id="date-bg"></div-->
+<section id="popup" class="section popup ">
+
+<!-- Add the modal with input fields -->
+<div class="modal emilys has-text-white" id="timerModal">
+  <div class="modal-background"></div>
+  <div class="modal-card ml-6">
+    <header class="has-text-centered">
+      <p class="">Set Timer</p>
+      <!--button class="delete" aria-label="close" id="modalCloseButton"></button-->
+    </header>
+    <section class="columns">
+      <div class="column is-3">
+        <label class="">Days</label>
+        <div class="">
+          <input class="input" type="number" id="daysInput" min="0" value="0">
+        </div>
+      </div>
+      <div class="column is-3">
+        <label class="">Hours</label>
+        <div class="">
+          <input class="input" type="number" id="hoursInput" min="0" value="0">
+        </div>
+      </div>
+      <div class="column is-3">
+        <label class="">Minutes</label>
+        <div class="">
+          <input class="input emilys" type="number" id="minutesInput" min="0" value="0">
+        </div>
+      </div>
+      <div class="column is-3">
+        <label class="">Seconds</label>
+        <div class="">
+          <input class="input" type="number" id="secondsInput" min="0" value="0">
+        </div>
+      </div>
+    </section>
+    <footer class="">
+      <button class="button is-success" id="modalSubmitButton">Set</button>
+      <button class="button" id="modalCancelButton">Cancel</button>
+    </footer>
+  </div>
+</div>
+
+    
+
+
+
+
+
+    <div class="columns has-text-centered is-hidden">
+        <a class="column" id="todoLink"><span class="word on"> To-Do List</span></a>
+      <a class="column neoncourier" id="timerLink">Timer</a>
+    </div>
+
+    <div class="container">
+      <div id="todoSection">
+        <!--h2 class="subtitle emilys has-text-centered">To-Do List</h2-->
+        <div class="columns">
+          <a class="column is-5">
+            <div>
+              <article class="panel has-text-centered is-trasparent" id="panel" >
+                <!--p class="panel-heading is-trasparent  has-text-centered"-->
+                  <button id="addTaskList" class=" is-trasparent is-uppercase  neueneon" >Lists</button>
+                <!--/p-->
+                <div id="todoSubsections" class="has-text-centered mt-5" style="background-color:trasparent;box-shadow:none; outline:none;border;none;visibility: hidden;"></div>
+                <div class="column is-12" id="targetDiv" style="visibility:hidden;margin-top: 25%;"> <span class="trash">
+                    <span></span>
+                    <i></i>
+                    </span><div> 
+              </article>
+            </div>
+          </a>
+          
+          <div id="listColumn" class="column is-7" style="visibility:hidden !important;">
+            <div class="field has-addons">
+              <div class="control">
+                <input class="inputneon" type="text" id="taskInput" placeholder="Enter task...">
+              </div>
+              <div class="control">
+                     
+                <button class="neonbutton" id="addTaskButton"><i class="fas fa-plus"></i></button>
+                <button class="neonbutton" id="removeTaskButton"><i class="fas fa-times"></i> </button>
+                  
+              </div>
+            </div>
+            <div id="todoSelSubsection"  style="width: 100%;height:auto;">
+                
+              
+ 
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="timerSection">
+        <h2 class="subtitle has-text-centered">Timer</h2>
+        <div class="field is-grouped">
+          <div class="control">
+            <input class="input is-small" type="number" id="hoursInput" max="999" placeholder="H">
+          </div>
+          <div class="control">
+            <input class="input is-small " type="number" id="minutesInput" max="999" placeholder="M">
+          </div>
+          <div class="control">
+            <input class="input is-small" type="number" id="secondsInput" max="999" placeholder="S">
+          </div>
+          <div class="control">
+            <button class="button is-primary" id="startButton">Start</button>
+          </div>
+          <div class="control">
+            <button class="button is-danger" id="stopButton">Stop</button>
+          </div>
+        </div>
+        <div id="timerOutput"></div>
+        <div id="timerSubsections"></div>
+      </div>
+    </div>
+  </section>
+  <script src="dragtobin1.js"></script>
+  <script src="wordclock.js"></script>
+  <script src="content.js"></script>
+      
+</body>
+</html>
+
