@@ -24,6 +24,28 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.style.backgroundImage = `url('${imageUrl}')`;
 });
 
+function getCurrentDayTime(){
+    const dawnStart = 5;
+    const dayStart = 7;
+    const sunsetStart = 18;
+    const nightStart = 20;
+
+    // Get the current hour
+    const currentHour = new Date().getHours();
+    var DayTime = "";
+    if (currentHour >= dawnStart && currentHour < dayStart) {
+        DayTime = "Day";
+    } else if (currentHour >= dayStart && currentHour < sunsetStart) {
+        DayTime = "Day";
+    } else if (currentHour >= sunsetStart && currentHour < nightStart) {
+        DayTime = "Night";
+    } else {
+        DayTime = "Night";
+    }
+   return DayTime;
+}
+
+
 var panel = document.getElementById('panel');
 var todoSS = document.getElementById('todoSubsections'); 
 var addTL = document.getElementById('addTaskList');
@@ -91,7 +113,14 @@ function createPanelBlock(taskList) {
   panelBlock.style.outline = "none";
   panelBlock.style.border = "none";
     /*panelBlock.innerHTML = `<div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="position:absolute;" class="column is-2 has-background-primary"><p  class="my-text marker has-text-alert">${taskList.name}</p></div><div class="column is-4 has-background-success"></div><div class="column is-4"></div><div id="${name}" ></div>`*/
-    panelBlock.innerHTML = `<div class="column is-4"></div><div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="position:absolute;left:8rem;" ><p  class="my-text marker has-text-alert">${taskList.name}</p></div>`
+   
+  var textColor = "";
+  if (getCurrentDayTime() == "Day"){
+      textColor = "black"}
+  else if(getCurrentDayTime() == "Night"){
+       textColor = "white"}
+
+    panelBlock.innerHTML = `<div class="column is-4"></div><div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="position:absolute;left:8rem;" ><p  class="my-text marker has-text-${textColor} has-text-alert">${taskList.name}</p></div>`
  
   
 
@@ -382,8 +411,11 @@ function renderSelectedList(taskarray) {
      
     taskItem.className="columns mt-5";
     
-    
-    taskName.className ="column marker is-4 is-parent is-vcentered has-text-centered has-text-black has-text-weight-bold";
+    if (getCurrentDayTime() == "Day"){ 
+    taskName.className ="column marker is-4 is-parent is-vcentered has-text-centered has-text-black has-text-weight-light";}
+    else if (getCurrentDayTime() == "Night") {
+    taskName.className ="column marker is-4 is-parent is-vcentered has-text-centered has-text-white has-text-weight-light";}
+
     taskName.textContent = task.name;
     taskName.id= `${task.name}${counter}`;
     taskName.value=counter;
