@@ -120,7 +120,7 @@ function createPanelBlock(taskList) {
   else if(getCurrentDayTime() == "Night"){
        textColor = "white"}
 
-    panelBlock.innerHTML = `<div class="column is-4"></div><div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="position:absolute;left:8rem;" ><p  class="my-text marker has-text-${textColor} has-text-alert">${taskList.name}</p></div>`
+    panelBlock.innerHTML = `<div class="column is-4"></div><div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="position:absolute;left:8rem;" ><p  class="my-text baskerville has-text-${textColor} has-text-alert">${taskList.name}</p></div>`
  
   
 
@@ -412,9 +412,9 @@ function renderSelectedList(taskarray) {
     taskItem.className="columns mt-5";
     
     if (getCurrentDayTime() == "Day"){ 
-    taskName.className ="column marker is-4 is-parent is-vcentered has-text-centered has-text-black has-text-weight-light";}
+    taskName.className ="column baskerville is-4 is-parent is-vcentered has-text-centered has-text-black has-text-weight-light";}
     else if (getCurrentDayTime() == "Night") {
-    taskName.className ="column marker is-4 is-parent is-vcentered has-text-centered has-text-white has-text-weight-light";}
+    taskName.className ="column baskerville is-4 is-parent is-vcentered has-text-centered has-text-white has-text-weight-light";}
 
     taskName.textContent = task.name;
     taskName.id= `${task.name}${counter}`;
