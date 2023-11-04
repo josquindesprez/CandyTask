@@ -387,6 +387,8 @@ function renderSelectedList(taskarray) {
   console.log(lista)
   const listColumn = document.getElementById('listColumn')
   const listContainer = document.getElementById('todoSelSubsection');
+  listContainer.style.backgroundColor="rgba(255,255,255,0.2)";
+  
   //console.log(listContainer)
   // Clear existing list items before rendering
   listContainer.innerHTML = '';
@@ -412,9 +414,9 @@ function renderSelectedList(taskarray) {
     taskItem.className="columns mt-5";
     
     if (getCurrentDayTime() == "Day"){ 
-    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-centered has-text-black has-text-weight-light";}
+    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-black has-text-weight-light";}
     else if (getCurrentDayTime() == "Night") {
-    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-centered has-text-white has-text-weight-light";}
+    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-white has-text-weight-light";}
 
     taskName.textContent = task.name;
     taskName.id= `${task.name}${counter}`;
