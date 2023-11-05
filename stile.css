@@ -320,4 +320,45 @@ border: 1px solid black;
   border-color: #fff !important;
 }
 
+#highlighter-colors-modal .modal-background{
+    width: 800px !important; 
+    height: 600px !important;
 
+}
+    
+/* Your Custom CSS file (e.g., stile.css) */
+#highlighter-colors-modal .modal-card {
+  width: 300px; !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  max-width:800px !important;
+}
+
+#highlighter-colors-modal .modal-card-head,
+#highlighter-colors-modal .modal-card-foot,
+#highlighter-colors-modal .modal-card-body {
+  background-color: transparent !important;
+}
+
+#highlighter-colors-modal .modal-card-body .field .label {
+  color: #fff !important;
+}
+
+#highlighter-colors-modal .modal-card-body .input {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+.colorpick{
+ font-family: 'montserrat', serif; 
+ font-color:white;
+}
+
+select 
+{
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  -o-appearance:none;
+   appearance:none; 
+}

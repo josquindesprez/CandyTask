@@ -112,18 +112,14 @@ function createPanelBlock(taskList) {
   panelBlock.style.background ="trasparent";
   panelBlock.style.outline = "none";
   panelBlock.style.border = "none";
-    /*panelBlock.innerHTML = `<div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="position:absolute;" class="column is-2 has-background-primary"><p  class="my-text marker has-text-alert">${taskList.name}</p></div><div class="column is-4 has-background-success"></div><div class="column is-4"></div><div id="${name}" ></div>`*/
-   
   var textColor = "";
   if (getCurrentDayTime() == "Day"){
       textColor = "black"}
   else if(getCurrentDayTime() == "Night"){
        textColor = "white"}
 
-    panelBlock.innerHTML = `<div class="column is-4"></div><div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="position:absolute;left:8rem;" ><p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p></div>`
+    panelBlock.innerHTML = `<div class="column is-5"><button class="button is-rounded is-small" id="cp${taskList.name}" ></button></div><div class="column is-3"></div><div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="position:absolute;left:8rem;" ><p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p></div>`
  
-  
-
   // Add event listener to select the task list when the panel block is clicked
   panelBlock.addEventListener('click', function () {
     selectTaskList(taskList);
@@ -133,26 +129,56 @@ function createPanelBlock(taskList) {
   const panel = document.getElementById('todoSubsections');
   
   panel.appendChild(panelBlock);
-  /*var removeButtonContainer=document.getElementById(name)
-  var removeButton = document.createElement('div');
-  removeButton.id=`targetDiv${id}`;
-  removeButton.className="confini";
-  removeButton.innerHTML =`<p class="" >drag&delete!</p>`
-  removeButton.style.visibility = "hidden";
+  var cpbutton = document.getElementById(`cp${taskList.name}`);
+  cpbutton.style.backgroundColor= taskList.color;
   
-  removeButtonContainer.appendChild(removeButton);*/
+    cpbutton.innerHTML = `<div id="contsel${taskList.name}" class="select is-small" style="display:none;opacity:0; "><select id="sel${taskList.name}"  ><option value="#b52828" style="background-color: #b52828;"></option>
+                        <option value="#6e290c" style="background-color: #6e290c;"></option>
+                        <option value="#f28218" style="background-color: #f28218;"></option>
+                        <option value="#f0ec24" style="background-color: #f0ec24; color: black;"></option>
+                        <option value="#4dbf4b" style="background-color: #4dbf4b;"></option>
+                        <option value="#366f9e" style="background-color: #366f9e;"></option>
+                        <option value="#9a3dd9" style="background-color: #9a3dd9;"></option></select></div>`;
+     
+   cpbutton.addEventListener('mouseenter', function() {
+    document.getElementById(`contsel${taskList.name}`).style.display = 'block';
+    
+  });
+
+   cpbutton.addEventListener('mouseleave', function() {
+
+     document.getElementById(`contsel${taskList.name}`).style.display = 'none';
+
+   });
+   
+    document.getElementById(`sel${taskList.name}`).addEventListener('change', function() {
+    cpbutton.style.backgroundColor = this.value;
+    console.log(this.value)
+    
+    var todoSel = document.getElementById('todoSelSubsection')
+    todoSel.style.borderTopWidth= "6px";
+    todoSel.style.borderTopColor= this.value;
+    todoSel.style.borderTopStyle= "solid";
+    
+    todoSel.style.backgroundColor = `${this.value}80` 
+    taskList.color = this.value;
+    const taskListString = JSON.stringify(taskList);
+    console.log(`the color is ${taskList.color}`); 
+    storeTaskLists();
+    });
+   
   var dragelement = document.getElementById(`drag${name}`);
   dragElement(dragelement);
-  
+}  
 
 
 
 
 
 
-}
 
-// Function to select a task list and mark it as active
+
+
 // Function to select a task list and mark it as active
 function selectTaskList(taskList) {
   
@@ -205,7 +231,16 @@ let taskLists = [];
 function generateUniqueID() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 }
+// Define the colors and their readable names
+const colors = [
+  { code: "#ff0", name: "Yellow" },
+  { code: "#0f0", name: "Green" },
+  { code: "#00f", name: "Blue" },
+  { code: "#f0f", name: "Pink" },
+  { code: "#ff9900", name: "Orange" }
+];
 
+// Function to create the select element with options
 // Function to add a new task list
 function addTaskList() {
   const taskListName = prompt('Enter the name of the new task list:');
@@ -230,7 +265,8 @@ function addTaskList() {
     name: taskListName,
     type: isTodoActive ? 'todo' : 'timer',
     tasks: [],
-    id: id
+    id: id,
+    color:"",  
   };
 
   // Add the new task list to the taskLists array
@@ -388,7 +424,10 @@ function renderSelectedList(taskarray) {
   const listColumn = document.getElementById('listColumn')
   const listContainer = document.getElementById('todoSelSubsection');
   listContainer.style.backgroundColor="rgba(255,255,255,0.2)";
-  
+  var todoSel = document.getElementById('todoSelSubsection')
+  listContainer.style.borderTopWidth= "6px";
+  listContainer.style.borderTopColor= getSelectedTaskList().color;
+  listContainer.style.borderTopStyle= "solid";
   //console.log(listContainer)
   // Clear existing list items before rendering
   listContainer.innerHTML = '';
