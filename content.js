@@ -111,7 +111,10 @@ function createPanelBlock(taskList) {
   panelBlock.className = 'panel-block is-fullwidth has-text-centered has-text-black is-size-6  is-uppercase has-text-weight-bold onhoversfondo ';
   panelBlock.style.background ="trasparent";
   panelBlock.style.outline = "none";
-  panelBlock.style.border = "none";
+  //panelBlock.style.border = "none";
+  panelBlock.style.borderColor= taskList.color;  
+  panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}` 
+
   var textColor = "";
   if (getCurrentDayTime() == "Day"){
       textColor = "black"}
@@ -127,11 +130,12 @@ function createPanelBlock(taskList) {
   });
   
   const panel = document.getElementById('todoSubsections');
-  
+   
   panel.appendChild(panelBlock);
   var cpbutton = document.getElementById(`cp${taskList.name}`);
-  cpbutton.style.backgroundColor= taskList.color;
-  
+  cpbutton.style.backgroundColor= hexToRgba(taskList.color,0.3)
+  cpbutton.style.borderColor= taskList.color;  
+  cpbutton.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}` 
     cpbutton.innerHTML = `<div id="contsel${taskList.name}" class="select is-small" style="display:none;opacity:0; "><select id="sel${taskList.name}"  ><option value="#b52828" style="background-color: #b52828;"></option>
                         <option value="#6e290c" style="background-color: #6e290c;"></option>
                         <option value="#f28218" style="background-color: #f28218;"></option>
@@ -418,16 +422,22 @@ function removeTaskFromList(taskToRemove) {
 function renderSelectedList(taskarray) {
   const wordClock = document.getElementById('clock');
   wordClock.style.opacity = 0;
+  var colore = getSelectedTaskList().color
+
   makeClockHorizontal(); 
   const lista = taskarray;
   console.log(lista)
   const listColumn = document.getElementById('listColumn')
   const listContainer = document.getElementById('todoSelSubsection');
-  listContainer.style.backgroundColor="rgba(255,255,255,0.2)";
+  listContainer.style.backgroundColor=hexToRgba(colore,0.05);
+
+// Syntax: box-shadow: h-offset v-offset blur spread color;
+  //listContainer.style.boxShadow = `0px -5px 5px 0px ${hexToRgba(colore,0.3)}`;
+  
   var todoSel = document.getElementById('todoSelSubsection')
   listContainer.style.borderTopWidth= "6px";
-  var colore = getSelectedTaskList().color
-  listContainer.style.borderTopColor= colore;
+  
+  listContainer.style.borderTopColor= hexToRgba(colore,0.4);
   document.documentElement.style.scrollbarColor = colore;
 // Set the scrollbar width to thin for the whole document
   document.documentElement.style.scrollbarWidth = "thin";
@@ -504,7 +514,7 @@ function renderSelectedList(taskarray) {
 listContainer.style.maxHeight = "400px";
 listContainer.style.overflow="hidden auto";
 
-listContainer.style.setProperty('--scrollbar-color', colore);
+//listContainer.style.setProperty('--scrollbar-color', colore);
 
 
     deleteButton.addEventListener('click', function (event) {
