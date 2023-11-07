@@ -426,13 +426,18 @@ function renderSelectedList(taskarray) {
   listContainer.style.backgroundColor="rgba(255,255,255,0.2)";
   var todoSel = document.getElementById('todoSelSubsection')
   listContainer.style.borderTopWidth= "6px";
-  listContainer.style.borderTopColor= getSelectedTaskList().color;
+  var colore = getSelectedTaskList().color
+  listContainer.style.borderTopColor= colore;
+  document.documentElement.style.scrollbarColor = colore;
+// Set the scrollbar width to thin for the whole document
+  document.documentElement.style.scrollbarWidth = "thin";
+  
   listContainer.style.borderTopStyle= "solid";
   //console.log(listContainer)
   // Clear existing list items before rendering
   listContainer.innerHTML = '';
   let counter = 0;
-  listColumn.style.visibility="visible";
+  listContainer.style.visibility="visible";
   lista.forEach((task) => {
     var percLeft = calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate).percentageLeft
     
@@ -496,8 +501,13 @@ function renderSelectedList(taskarray) {
     if (percLeft !=0){
     createProgressBar(percLeft,secondsLeft,progressBarContainer,task)
 ;} 
-    
-deleteButton.addEventListener('click', function (event) {
+listContainer.style.maxHeight = "400px";
+listContainer.style.overflow="hidden auto";
+
+listContainer.style.setProperty('--scrollbar-color', colore);
+
+
+    deleteButton.addEventListener('click', function (event) {
     // Prevent the event from propagating up and triggering other event listeners
     event.stopPropagation();
 

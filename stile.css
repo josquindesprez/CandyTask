@@ -1,4 +1,6 @@
-html{overflow: auto;}
+html{
+    overflow: auto;
+  }
 
 body{
   /* background-image: url('./milano/milano3 (12).png');*/
@@ -18,9 +20,10 @@ body{
     }
 
 .popup {
+      
       width: 800px;
       height: 600px;
-      overflow: hidden;    
+      overflow: auto;    
   }
 
 
@@ -363,17 +366,15 @@ select
    appearance:none; 
 }
 
-#todoSelSubsection{
-  max-height: 300px;  
-  overflow-y: scroll ;
-  
-}
-#prova{}
-/*
-  scrollbar-width: none;*/ /* For Firefox */
-  /*-ms-overflow-style: none;*/ /* For Internet Explorer and Edge */
-/*}
 
-#todoSelSubsection::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
-/*}*/
+
+
+#listColumn{
+
+   max-height:300px;
+   overflow-y:auto;
+   
+
+}
+
+
