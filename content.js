@@ -133,10 +133,11 @@ function createPanelBlock(taskList) {
    
   panel.appendChild(panelBlock);
   var cpbutton = document.getElementById(`cp${taskList.name}`);
+  
   cpbutton.style.backgroundColor= hexToRgba(taskList.color,0.3)
   cpbutton.style.borderColor= taskList.color;  
   cpbutton.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}` 
-    cpbutton.innerHTML = `<div id="contsel${taskList.name}" class="select is-small" style="display:none;opacity:0; "><select id="sel${taskList.name}"  ><option value="#b52828" style="background-color: #b52828;"></option>
+  cpbutton.innerHTML = `<div id="contsel${taskList.name}" class="select is-small" style="display:none;opacity:0; "><select id="sel${taskList.name}"  ><option value="#b52828" style="background-color: #b52828;"></option>
                         <option value="#6e290c" style="background-color: #6e290c;"></option>
                         <option value="#f28218" style="background-color: #f28218;"></option>
                         <option value="#f0ec24" style="background-color: #f0ec24; color: black;"></option>
@@ -156,9 +157,13 @@ function createPanelBlock(taskList) {
    });
    
     document.getElementById(`sel${taskList.name}`).addEventListener('change', function() {
-    cpbutton.style.backgroundColor = this.value;
+    //cpbutton.style.backgroundColor = this.value;
+    cpbutton.style.backgroundColor= hexToRgba(this.value,0.3)
+    cpbutton.style.borderColor= this.value;  
+    cpbutton.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(this.value,0.4)}`
     console.log(this.value)
-    
+    panelBlock.style.borderColor= this.value;  
+    panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(this.value,0.4)}`
     var todoSel = document.getElementById('todoSelSubsection')
     todoSel.style.borderTopWidth= "6px";
     todoSel.style.borderTopColor= this.value;
