@@ -20,6 +20,9 @@ function hexToRgba(hex, alpha) {
     b = parseInt(hex.substring(4, 6), 16);
   } else {
     throw new Error('Invalid hex color: ' + hex);
+    r=255;
+    g=255;
+    b=255;
   }
 
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;

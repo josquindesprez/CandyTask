@@ -111,9 +111,22 @@ function createPanelBlock(taskList) {
   panelBlock.className = 'panel-block is-fullwidth has-text-centered has-text-black is-size-6  is-uppercase has-text-weight-bold onhoversfondo ';
   panelBlock.style.background ="trasparent";
   panelBlock.style.outline = "none";
-  //panelBlock.style.border = "none";
-  panelBlock.style.borderColor= taskList.color;  
-  panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}` 
+  
+  panelBlock.addEventListener('mouseenter', function(){
+  console.log('panel block hover');
+  panelBlock.style.borderLeftWidth = "10px";
+  panelBlock.style.borderLeft = "solid";
+  panelBlock.style.borderColor= taskList.color;
+  panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}`
+  })
+  
+  panelBlock.addEventListener('mouseleave', function(){
+  console.log('panel block leave');
+  panelBlock.style.boxShadow = `0px 0px 0px 0px ${hexToRgba(taskList.color,0.4)}`
+  panelBlock.style.borderLeft = "none";})
+  //panelBlock.style.borderColor= taskList.color;})
+
+   
 
   var textColor = "";
   if (getCurrentDayTime() == "Day"){
@@ -275,7 +288,7 @@ function addTaskList() {
     type: isTodoActive ? 'todo' : 'timer',
     tasks: [],
     id: id,
-    color:"",  
+    color:"#FFFFFF",  
   };
 
   // Add the new task list to the taskLists array
