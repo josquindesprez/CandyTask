@@ -111,8 +111,9 @@ function createPanelBlock(taskList) {
   var id = `${taskList.id}`
   var textCon = taskList.name;
   panelBlock.setAttribute('data-textContent', textCon)
+  panelBlock.style.borderBottom = "none";
   panelBlock.className = 'panel-block is-fullwidth has-text-centered has-text-black is-size-6  is-uppercase has-text-weight-bold onhoversfondo ';
-  panelBlock.style.background ="trasparent";
+  panelBlock.style.background ="transparent";
   panelBlock.style.outline = "none";
   
   panelBlock.addEventListener('mouseenter', function(){
@@ -178,8 +179,8 @@ function createPanelBlock(taskList) {
     cpbutton.style.borderColor= this.value;  
     cpbutton.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(this.value,0.4)}`
     console.log(this.value)
-    panelBlock.style.borderColor= this.value;  
-    panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(this.value,0.4)}`
+    //panelBlock.style.borderColor= this.value;  
+    //panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(this.value,0.4)}`
     var todoSel = document.getElementById('todoSelSubsection')
     todoSel.style.borderTopWidth= "6px";
     todoSel.style.borderTopColor= this.value;
