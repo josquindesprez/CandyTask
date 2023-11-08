@@ -41,6 +41,9 @@ function getCurrentDayTime(){
         DayTime = "Night";
     } else {
         DayTime = "Night";
+        document.getElementById('addTaskList').style.color="white";
+        document.getElementById('addTaskList').onmouseover = function(){ this.style.color="#0af";}
+        document.getElementById('addTaskList').onmouseout = function(){ this.style.color="#white";}
     }
    return DayTime;
 }
@@ -116,13 +119,13 @@ function createPanelBlock(taskList) {
   console.log('panel block hover');
   panelBlock.style.borderLeftWidth = "10px";
   panelBlock.style.borderLeft = "solid";
-  panelBlock.style.borderColor= taskList.color;
-  panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}`
+  panelBlock.style.borderLeftColor= taskList.color;
+  //panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}`
   })
   
   panelBlock.addEventListener('mouseleave', function(){
   console.log('panel block leave');
-  panelBlock.style.boxShadow = `0px 0px 0px 0px ${hexToRgba(taskList.color,0.4)}`
+  //panelBlock.style.boxShadow = `0px 0px 0px 0px ${hexToRgba(taskList.color,0.4)}`
   panelBlock.style.borderLeft = "none";})
   //panelBlock.style.borderColor= taskList.color;})
 
@@ -465,7 +468,7 @@ function renderSelectedList(taskarray) {
   console.log(lista)
   const listColumn = document.getElementById('listColumn')
   const listContainer = document.getElementById('todoSelSubsection');
-  var coloreRgba = hexToRgba(colore,0.05)
+  var coloreRgba = hexToRgba(colore,0.30)
   listContainer.style.backgroundColor= coloreRgba;
   setScrollbarColors(hexToRgba(colore, 0.7),coloreRgba);
 
