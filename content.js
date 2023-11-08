@@ -416,7 +416,25 @@ function removeTaskFromList(taskToRemove) {
 }
 
 
+// Function to create or update a style element for the scrollbar thumb and track
+function setScrollbarColors(thumbColor, trackColor) {
+  // Check if the style element already exists
+  let styleId = 'custom-scrollbar-style';
+  let styleEl = document.getElementById(styleId);
 
+  // If it doesn't exist, create it and append to <head>
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = styleId;
+    document.head.appendChild(styleEl);
+  }
+
+  // Set the CSS text for the scrollbar thumb and track pseudo-elements
+  styleEl.textContent = `
+    ::-webkit-scrollbar-thumb { background: ${thumbColor} !important; }
+    ::-webkit-scrollbar-track { background: ${trackColor} !important; }
+  `;
+}
 
 
 function renderSelectedList(taskarray) {
@@ -429,7 +447,9 @@ function renderSelectedList(taskarray) {
   console.log(lista)
   const listColumn = document.getElementById('listColumn')
   const listContainer = document.getElementById('todoSelSubsection');
-  listContainer.style.backgroundColor=hexToRgba(colore,0.05);
+  var coloreRgba = hexToRgba(colore,0.05)
+  listContainer.style.backgroundColor= coloreRgba;
+  setScrollbarColors(hexToRgba(colore, 0.7),coloreRgba);
 
 // Syntax: box-shadow: h-offset v-offset blur spread color;
   //listContainer.style.boxShadow = `0px -5px 5px 0px ${hexToRgba(colore,0.3)}`;
@@ -468,9 +488,9 @@ function renderSelectedList(taskarray) {
     taskItem.className="columns mt-5";
     
     if (getCurrentDayTime() == "Day"){ 
-    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-black has-text-weight-light";}
+    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-black has-text-weight-light ml-4";}
     else if (getCurrentDayTime() == "Night") {
-    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-white has-text-weight-light";}
+    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-white has-text-weight-light ml-4";}
 
     taskName.textContent = task.name;
     taskName.id= `${task.name}${counter}`;

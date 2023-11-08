@@ -378,11 +378,14 @@ select
 }
 
 
-body::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
+.scroll1::-webkit-scrollbar {
+  width: 5px;
 }
-/* Optional: show position indicator in red */
-body::-webkit-scrollbar-thumb {
-    background: #FF0000;
+ 
+.scroll1::-webkit-scrollbar-track {
+  background: #ddd;
+}
+ 
+.scroll1::-webkit-scrollbar-thumb {
+  background: #666; 
 }
