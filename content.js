@@ -507,7 +507,8 @@ function renderSelectedList(taskarray) {
     var taskItem = document.createElement('div');
     var taskName = document.createElement('div');
     var buttonContainer = document.createElement('div');
-    
+    var pinButtonContainer= document.createElement('div');
+    var pinButton = document.createElement('button');
     var addTimerButton = document.createElement('button');
     var iconaClessidra = document.createElement('i')
     var deleteButtContainer = document.createElement('div')
@@ -521,9 +522,9 @@ function renderSelectedList(taskarray) {
     taskItem.className="columns mt-5";
     
     if (getCurrentDayTime() == "Day"){ 
-    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-black has-text-weight-light ml-4";}
+    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-black has-text-weight-bold ml-4";}
     else if (getCurrentDayTime() == "Night") {
-    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-white has-text-weight-light ml-4";}
+    taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-white has-text-weight-bold ml-4";}
 
     taskName.textContent = task.name;
     taskName.id= `${task.name}${counter}`;
@@ -551,14 +552,70 @@ function renderSelectedList(taskarray) {
     //taskItem.appendChild(buttonContainer);
     taskItem.appendChild(progressBarContainer);
     taskItem.appendChild(deleteButtContainer);
+    taskItem.appendChild(pinButtonContainer);
+    pinButtonContainer.appendChild(pinButton);
+    pinButtonContainer.className="column is-1";
+    pinButtonContainer.style.outline ="none";
+    pinButtonContainer.style.backgroundColor = "transparent";
+    pinButton.style.visibility ="hidden";
+    pinButton.style.outline = "none";
+    pinButton.style.backgroundColor= "rgba(255,255,255,0)";
+    pinButton.className="bottonePin fas fa-thumbtack fa-pin";
+    pinButton.innerHTML=``;
+
+    pinButton.addEventListener('click', function(){
+     
+    let foundIndex = -1;
+
+for (let i = 0; i < lista.length; i++) {
+  if (lista[i].name === task.name) {
+    lista[i].number = 1;
+    foundIndex = i;
+    console.log(`found ${task.name}`) 
+    break; // Stop the loop once we've found the object
+  }
+}
+
+// If we found the object, iterate over the list and increment the number for the remaining objects
+if (foundIndex !== -1) {
+  let currentNumber = 1;
+  for (let i = 0; i < lista.length; i++) {
+    if (i !== foundIndex) { // Skip the object that already has number 1 assigned
+      currentNumber++;
+      lista[i].number = currentNumber;
+    }
+  } 
+} else {
+  console.log(`No object with taskName '${task.name}' found.`);
+} 
+  lista.sort((a, b) => a.number - b.number);  
+  console.log(lista)
+  storeTaskLists();
+
+  
+   
+
+  renderSelectedList(lista)
+
+    })
+
+
+
+
+
     deleteButtContainer.appendChild(deleteButton);
     deleteButtContainer.className = "deleteButtContainer";
     deleteButtContainer.style="visibility:hidden";
     //buttonContainer.appendChild(addTimerButton);
     //addTimerButton.appendChild(iconaClessidra);
     
-
-
+    taskItem.addEventListener('mouseenter', function(){
+    pinButton.style.visibility = "visible";
+    console.log('taskItem enter');
+    });
+    taskItem.addEventListener('mouseleave',function(){
+    pinButton.style.visibility ="hidden";
+    });
     var percLeft = calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate).percentageLeft
     var secondsLeft = calculateTimeLeftAndPercentage( task.timer.startDate, task.timer.endDate).secondsLeft
     if (percLeft !=0){
@@ -593,7 +650,7 @@ listContainer.style.overflow="hidden auto";
     
         
     //addTimerButton.addEventListener('click', function () {
-    taskItem.addEventListener('click',function(){
+    taskName.addEventListener('click',function(){
     tvalue=taskName.value;
     console.log(`tvalue is ${tvalue}`)
     const modal = document.getElementById('timerModal')

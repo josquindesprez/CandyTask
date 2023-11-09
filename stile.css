@@ -389,3 +389,9 @@ select
 .scroll1::-webkit-scrollbar-thumb {
   background: #666; 
 }
+
+.bottonePin{
+background-color: transparent !important;
+border:none;
+outline:none;
+}
