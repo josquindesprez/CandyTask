@@ -471,10 +471,11 @@ function sortByNumberAttribute(arr) {
 }
 function renderSelectedList(taskarray) {
   const wordClock = document.getElementById('clock');
-  wordClock.style.opacity = 0;
+  //wordClock.style.opacity = 0;
+  wordClock.style.visibility="hidden";
   var colore = getSelectedTaskList().color
 
-  makeClockHorizontal(); 
+  //makeClockHorizontal(); 
   const lista = taskarray;
   console.log(sortByNumberAttribute(lista))
   console.log(lista)
@@ -515,10 +516,11 @@ function renderSelectedList(taskarray) {
     var progressBarContainer = document.createElement('div')
     var deleteButton = document.createElement('button') 
     progressBarContainer.className="column is-4 is-child progressBarContainer";
-    deleteButtContainer.className="column is-2 is-child"; 
-    deleteButton.className=" removeTaskButton "
-    
-     
+    deleteButtContainer.className="column is-2 is-child deleteButtContainer"; 
+    deleteButton.className="bottonePin fas fa-trash fa-2x1"
+    deleteButton.style.backgroundColor= "rgba(255,255,255,0)"
+    deleteButton.style.visibility ="hidden";
+    deleteButton.style.border = "none";
     taskItem.className="columns mt-5";
     
     if (getCurrentDayTime() == "Day"){ 
@@ -547,12 +549,12 @@ function renderSelectedList(taskarray) {
     //iconaClessidra.className = "fas fa-hourglass";
     
     listContainer.appendChild(taskItem);
-    
+    taskItem.appendChild(pinButtonContainer);
     taskItem.appendChild(taskName);
     //taskItem.appendChild(buttonContainer);
     taskItem.appendChild(progressBarContainer);
     taskItem.appendChild(deleteButtContainer);
-    taskItem.appendChild(pinButtonContainer);
+    
     pinButtonContainer.appendChild(pinButton);
     pinButtonContainer.className="column is-1";
     pinButtonContainer.style.outline ="none";
@@ -560,61 +562,60 @@ function renderSelectedList(taskarray) {
     pinButton.style.visibility ="hidden";
     pinButton.style.outline = "none";
     pinButton.style.backgroundColor= "rgba(255,255,255,0)";
+    pinButton.style.border = "none";
     pinButton.className="bottonePin fas fa-thumbtack fa-pin";
     pinButton.innerHTML=``;
-
+    
     pinButton.addEventListener('click', function(){
      
     let foundIndex = -1;
 
-for (let i = 0; i < lista.length; i++) {
-  if (lista[i].name === task.name) {
-    lista[i].number = 1;
-    foundIndex = i;
-    console.log(`found ${task.name}`) 
-    break; // Stop the loop once we've found the object
-  }
-}
-
-// If we found the object, iterate over the list and increment the number for the remaining objects
-if (foundIndex !== -1) {
-  let currentNumber = 1;
-  for (let i = 0; i < lista.length; i++) {
-    if (i !== foundIndex) { // Skip the object that already has number 1 assigned
-      currentNumber++;
-      lista[i].number = currentNumber;
+    for (let i = 0; i < lista.length; i++) {
+      if (lista[i].name === task.name) {
+        lista[i].number = 1;
+        foundIndex = i;
+        console.log(`found ${task.name}`) 
+        break; // Stop the loop once we've found the object
+      }
     }
-  } 
-} else {
-  console.log(`No object with taskName '${task.name}' found.`);
-} 
-  lista.sort((a, b) => a.number - b.number);  
-  console.log(lista)
-  storeTaskLists();
 
-  
-   
-
-  renderSelectedList(lista)
+    // If we found the object, iterate over the list and increment the number for the remaining objects
+    if (foundIndex !== -1) {
+      let currentNumber = 1;
+      for (let i = 0; i < lista.length; i++) {
+        if (i !== foundIndex) { // Skip the object that already has number 1 assigned
+          currentNumber++;
+          lista[i].number = currentNumber;
+        }
+      } 
+    } else {
+      console.log(`No object with taskName '${task.name}' found.`);
+    } 
+      lista.sort((a, b) => a.number - b.number);  
+      console.log(lista)
+      storeTaskLists();
+      renderSelectedList(lista)
 
     })
 
-
-
-
-
     deleteButtContainer.appendChild(deleteButton);
-    deleteButtContainer.className = "deleteButtContainer";
-    deleteButtContainer.style="visibility:hidden";
-    //buttonContainer.appendChild(addTimerButton);
-    //addTimerButton.appendChild(iconaClessidra);
-    
+     
+    deleteButton.addEventListener('click', function (event) {
+    // Prevent the event from propagating up and triggering other event listeners
+    //event.stopPropagation();
+    removeTaskFromList(task);
+    // Re-render the list of tasks
+    renderSelectedList(lista);
+});
+
     taskItem.addEventListener('mouseenter', function(){
     pinButton.style.visibility = "visible";
+    deleteButton.style.visibility="visible";
     console.log('taskItem enter');
     });
     taskItem.addEventListener('mouseleave',function(){
     pinButton.style.visibility ="hidden";
+    deleteButton.style.visibility="hidden";
     });
     var percLeft = calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate).percentageLeft
     var secondsLeft = calculateTimeLeftAndPercentage( task.timer.startDate, task.timer.endDate).secondsLeft
@@ -627,17 +628,7 @@ listContainer.style.overflow="hidden auto";
 //listContainer.style.setProperty('--scrollbar-color', colore);
 
 
-    deleteButton.addEventListener('click', function (event) {
-    // Prevent the event from propagating up and triggering other event listeners
-    event.stopPropagation();
-
-    // Remove the task from the task list
-    removeTaskFromList(task);
-
-    // Re-render the list of tasks
-    renderSelectedList(lista);
-});
-    
+        
 
     
     //var tvalue = parseInt(counter);
@@ -869,8 +860,8 @@ document.addEventListener('DOMContentLoaded', function () {
   addTaskButton.addEventListener('click', addTask);
 
   // Event listener for "Remove Task" button
-  const removeTaskButton = document.getElementById('removeTaskButton');
-  removeTaskButton.addEventListener('click', function(){
+  //const removeTaskButton = document.getElementById('removeTaskButton');
+ /* removeTaskButton.addEventListener('click', function(){
 // Select all elements with class "deleteButtContainer"
     var elements = document.querySelectorAll('.deleteButtContainer');
 
@@ -880,7 +871,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-  });
+  });*/
 
   const cancelModalButton = document.getElementById('modalCancelButton');
   cancelModalButton.addEventListener('click', closeModal);
