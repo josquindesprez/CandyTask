@@ -62,7 +62,7 @@ var todoSS = document.getElementById('todoSubsections');
 var addTL = document.getElementById('addTaskList');
 
 
-
+/*
 panel.addEventListener('mouseenter', function(){
    
     
@@ -76,7 +76,7 @@ panel.addEventListener('mouseleave', function(){
    todoSS.style.visibility = 'hidden';
    
 
-});
+});*/
 
 addTL.addEventListener('mouseover', function(){ 
     addTL.innerHTML ="Add!";
@@ -123,21 +123,8 @@ function createPanelBlock(taskList) {
   panelBlock.className = 'panel-block is-fullwidth has-text-centered has-text-black is-size-6  is-uppercase has-text-weight-bold onhoversfondo ';
   panelBlock.style.background ="transparent";
   panelBlock.style.outline = "none";
+  //panelBlock.style.direction="ltr"; 
   
-  panelBlock.addEventListener('mouseenter', function(){
-  console.log('panel block hover');
-  panelBlock.style.borderLeftWidth = "10px";
-  panelBlock.style.borderLeft = "solid";
-  panelBlock.style.borderLeftColor= taskList.color;
-  //panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}`
-  })
-  
-  panelBlock.addEventListener('mouseleave', function(){
-  console.log('panel block leave');
-  //panelBlock.style.boxShadow = `0px 0px 0px 0px ${hexToRgba(taskList.color,0.4)}`
-  panelBlock.style.borderLeft = "none";})
-  //panelBlock.style.borderColor= taskList.color;})
-
    
 
   var textColor = "";
@@ -146,17 +133,52 @@ function createPanelBlock(taskList) {
   else if(getCurrentDayTime() == "Night"){
        textColor = "white"}
 
-    panelBlock.innerHTML = `<div class="column is-5"><button class="button is-rounded is-small" id="cp${taskList.name}" ></button></div><div class="column is-3"></div><div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="position:absolute;left:8rem;" ><p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p></div>`
- 
+    panelBlock.innerHTML = 
+
+
+    `<div class="column is-5">
+         <button class="button is-rounded is-small" id="cp${taskList.name}" ></button>
+    </div>
+     <div class="column is-1"></div>
+     <div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="" >
+         <p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p>
+     </div>
+     <div class="column is-1">
+         <button class="neonbutton selectList" id="selectLI${name}" >
+            <i class="fas fa-arrow-right"></i>
+         </button>
+     </div>`
+ panelBlock.addEventListener('mouseenter', function(){
+  //console.log('panel block hover');
+  panelBlock.style.borderLeftWidth = "10px";
+  panelBlock.style.borderLeft = "solid";
+  panelBlock.style.borderLeftColor= taskList.color;
+  document.getElementById(`selectLI${name}`).style.visibility = "visible";
+     
+
+     //panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}`
+  })
+  
+  panelBlock.addEventListener('mouseleave', function(){
+  //console.log('panel block leave');
+  //panelBlock.style.boxShadow = `0px 0px 0px 0px ${hexToRgba(taskList.color,0.4)}`
+  panelBlock.style.borderLeft = "none";
+  document.getElementById(`selectLI${name}`).style.visibility = "hidden";
+
+  })
+  //panelBlock.style.borderColor= taskList.color;})
+
   // Add event listener to select the task list when the panel block is clicked
-  panelBlock.addEventListener('click', function () {
+    
+  const panel = document.getElementById('todoSubsections');
+   
+  panel.appendChild(panelBlock);
+  document.getElementById(`selectLI${name}`).addEventListener('click', function () {
     selectTaskList(taskList);
     console.log('click');
   });
   
-  const panel = document.getElementById('todoSubsections');
-   
-  panel.appendChild(panelBlock);
+
   var cpbutton = document.getElementById(`cp${taskList.name}`);
   
   cpbutton.style.backgroundColor= hexToRgba(taskList.color,0.3)
@@ -203,6 +225,7 @@ function createPanelBlock(taskList) {
    
   var dragelement = document.getElementById(`drag${name}`);
   dragElement(dragelement);
+  console.log(`dragged ${taskList.name}`);
 }  
 
 
@@ -248,7 +271,7 @@ function selectTaskList(taskList) {
   }
 
   // Update the selected task list
-  const todoLink = document.getElementById('todoLink');
+  /*const todoLink = document.getElementById('todoLink');
   const timerLink = document.getElementById('timerLink');
 
   if (taskList.type === 'todo') {
@@ -257,7 +280,7 @@ function selectTaskList(taskList) {
   } else {
     todoLink.classList.remove('is-active');
     timerLink.classList.add('is-active');
-  }
+  }*/
 }
 
 
@@ -465,16 +488,28 @@ function setScrollbarColors(thumbColor, trackColor) {
     ::-webkit-scrollbar-track { background: ${trackColor} !important; }
   `;
 }
+function showListColumn(){
+document.getElementById('listlists').style.display = "none";    
+document.getElementById('listColumn').style.display = "block";
+
+
+}
+function showListlists(){
+document.getElementById('listColumn').style.display = "none";
+document.getElementById('listlists').style.display = "block";    
+
+
+}
 
 function sortByNumberAttribute(arr) {
   return arr.sort((a, b) => a.number - b.number);
 }
 function renderSelectedList(taskarray) {
-  const wordClock = document.getElementById('clock');
+  //const wordClock = document.getElementById('clock');
   //wordClock.style.opacity = 0;
-  wordClock.style.visibility="hidden";
+  //wordClock.style.visibility="hidden";
   var colore = getSelectedTaskList().color
-
+  showListColumn() 
   //makeClockHorizontal(); 
   const lista = taskarray;
   console.log(sortByNumberAttribute(lista))
@@ -836,7 +871,7 @@ function getSelectedTaskList() {
 // Add event listeners when the DOM is ready
 document.addEventListener('DOMContentLoaded', function () {
   // Event listener for "To-Do List" link
-  const todoLink = document.getElementById('todoLink');
+  /*const todoLink = document.getElementById('todoLink');
   todoLink.addEventListener('click', function () {
     hideTimerSection();
     showTodoSection();
@@ -847,7 +882,7 @@ document.addEventListener('DOMContentLoaded', function () {
   timerLink.addEventListener('click', function () {
     hideTodoSection();
     showTimerSection();
-  });
+  });*/
 
   // Event listener for "Add Task List" button
   const addTaskListButton = document.getElementById('addTaskList');
@@ -858,7 +893,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // Event listener for "Add Task" button
   const addTaskButton = document.getElementById('addTaskButton');
   addTaskButton.addEventListener('click', addTask);
-
+  const backToListsButton = document.getElementById('backToLists');
+  backToListsButton.addEventListener('click', function(){
+     showListlists()});
   // Event listener for "Remove Task" button
   //const removeTaskButton = document.getElementById('removeTaskButton');
  /* removeTaskButton.addEventListener('click', function(){

@@ -73,43 +73,49 @@
 </div>
 
     
-
-
-
-
-
-    <div class="columns has-text-centered is-hidden">
+<div class="columns has-text-centered is-hidden">
         <a class="column" id="todoLink"><span class="word on"> To-Do List</span></a>
       <a class="column neoncourier" id="timerLink">Timer</a>
-    </div>
+</div>
+
+
+
+
+    
 
     <div class="container">
       <div id="todoSection">
         <!--h2 class="subtitle emilys has-text-centered">To-Do List</h2-->
         <div class="columns">
-          <a class="column is-5">
-            <div>
+          <a id="listlists" class="column is-12 scroll1" style="max-width: 800px;max-height:600px;">
+              <div class="columns">
+              <!--div class="column is-1"></div-->
+              <div class="column is-10">
               <article class="panel has-text-centered is-trasparent" id="panel" >
                 <!--p class="panel-heading is-trasparent  has-text-centered"-->
                   <button id="addTaskList" class=" is-trasparent is-uppercase  neueneon" >Lists</button>
                 <!--/p-->
-                <div id="todoSubsections" class="has-text-centered mt-5" style="background-color:trasparent;box-shadow:none; outline:none;border;none;visibility: hidden;"></div>
+                <div id="todoSubsections" class="has-text-centered mt-5 scroll1" style="background-color:trasparent;box-shadow:none; outline:none;border:none;max-height:400px;overflow:auto;"></div>
                 <div class="column is-12" id="targetDiv" style="visibility:hidden;margin-top: 25%;"> <span class="trash">
                     <span></span>
                     <i></i>
                     </span><div> 
-              </article>
+                </article>
+                </div>
+                <!--div class="column is-1"></div-->
             </div>
           </a>
           
-          <div id="listColumn" class="column is-7 scroll1" style="">
-            <div class="field has-addons">
+          <div id="listColumn" class="column is-12 scroll1" style="display:none;">
+              <button class="neonbutton" id="backToLists"><i class="fas fa-arrow-left"></i></button>
+
+              <div class="field has-addons">
               <div class="control">
                 <input class="inputneon" type="text" id="taskInput" placeholder="Enter task...">
               </div>
               <div class="control">
                      
-                <button class="neonbutton" id="addTaskButton"><i class="fas fa-plus"></i></button>
+                <button class="neonbutton" id="addTaskButton"><i class="fas fa-plus mb-6"></i></button>
                 <!--button class="neonbutton" id="removeTaskButton"><i class="fas fa-times"></i> </button-->
                   
               </div>
@@ -123,33 +129,11 @@
         </div>
       </div>
 
-      <div id="timerSection">
-        <h2 class="subtitle has-text-centered">Timer</h2>
-        <div class="field is-grouped">
-          <div class="control">
-            <input class="input is-small" type="number" id="hoursInput" max="999" placeholder="H">
-          </div>
-          <div class="control">
-            <input class="input is-small " type="number" id="minutesInput" max="999" placeholder="M">
-          </div>
-          <div class="control">
-            <input class="input is-small" type="number" id="secondsInput" max="999" placeholder="S">
-          </div>
-          <div class="control">
-            <button class="button is-primary" id="startButton">Start</button>
-          </div>
-          <div class="control">
-            <button class="button is-danger" id="stopButton">Stop</button>
-          </div>
-        </div>
-        <div id="timerOutput"></div>
-        <div id="timerSubsections"></div>
-      </div>
-    </div>
+      
   </section>
   <script src="hexToRgba.js"></script>
   <script src="dragtobin1.js"></script>
-  <script src="wordclock.js"></script>
+  <!--script src="wordclock.js"></script-->
   <script src="content.js"></script>
       
 </body>

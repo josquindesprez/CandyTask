@@ -4,26 +4,36 @@ html{
 
 body{
   /* background-image: url('./milano/milano3 (12).png');*/
-   background-size: cover;
-   max-width: 800px;
-   max-height: 600px;
+   background-size:contain ;
+   background-repeat: no-repeat;
+   background-position: center center;
+   background-color: black;
+  /* max-width: 800px;
+   max-height: 600px;*/
 
 }
 
 #panel{
     border:none;
     outline:none;
-    box-shadow:none;}
+    box-shadow:none;
+   
+}
 
 #timerSection {
       display: none;
     }
 
 .popup {
-      
-      width: 800px;
+      position: absolute;
+      left:50%;
+      top:50%;
+      width: 533px;
       height: 600px;
-      overflow: auto;    
+      overflow: hidden;    
+      transform: translate(-50%, -50%);
+      max-width:800px;
+      max-height:600px;
   }
 
 
@@ -94,7 +104,23 @@ font-family: 'Montserrat', serif;
     text-shadow: 0 0 5px #6bdb67;
 
 }
+#backToLists:hover{
+    /*color:lightgrey;*/
+    opacity:1;
+    text-shadow: 0 0 5px cyan;
 
+}
+
+.selectList{
+   visibility:hidden;
+
+}
+
+.selectList:hover{
+    opacity:1;
+    text-shadow: 0 0 5px cyan;
+
+}
 @keyframes blink {
     0% { text-shadow: 0 0 15px red; }
     50% { text-shadow: none; }
@@ -163,6 +189,7 @@ font-family: 'Montserrat', serif;
     outline:none;
     border-bottom: solid #6bf;}
 
+
 #addTaskList{
      font-family: 'Comic neue';
      text-transform: uppercase;
@@ -173,8 +200,8 @@ font-family: 'Montserrat', serif;
      text-shadow: 0 0 5px #6bf;
      border:none;
      background: none;
-     outline:none
-
+     outline:none;
+          
 
  }
 
@@ -192,7 +219,7 @@ font-family: 'Montserrat', serif;
 
 
 #taskList {
-  max-height: 200px;
+  max-height: 100px;
  /* overflow-y: auto;*/
 }
 
@@ -394,4 +421,9 @@ select
 background-color: transparent !important;
 border:none;
 outline:none;
+}
+
+#listlists{
+  overflow: auto;
+
 }
