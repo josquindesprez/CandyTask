@@ -187,7 +187,7 @@ font-family: 'Montserrat', serif;
 .inputneon:focus{
     border:none;
     outline:none;
-    border-bottom: solid #6bf;}
+    }
 
 
 #addTaskList{
@@ -397,7 +397,7 @@ select
 
 
 #listColumn{
-
+   
    max-height:300px;
    overflow-y:auto;
    

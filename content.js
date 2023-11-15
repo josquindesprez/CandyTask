@@ -48,7 +48,7 @@ function getCurrentDayTime(){
     } else if (currentHour >= sunsetStart && currentHour < nightStart) {
         DayTime = "Night";
     } else {
-        DayTime = "Night";
+        DayTime = "Day";
         document.getElementById('addTaskList').style.color="white";
         document.getElementById('addTaskList').onmouseover = function(){ this.style.color="#0af";}
         document.getElementById('addTaskList').onmouseout = function(){ this.style.color="#white";}
@@ -122,8 +122,9 @@ function createPanelBlock(taskList) {
   panelBlock.style.borderBottom = "none";
   panelBlock.className = 'panel-block is-fullwidth has-text-centered has-text-black is-size-6  is-uppercase has-text-weight-bold onhoversfondo ';
   panelBlock.style.background ="transparent";
+  //
   panelBlock.style.outline = "none";
-  //panelBlock.style.direction="ltr"; 
+  panelBlock.style.direction="ltr"; 
   
    
 
@@ -136,35 +137,38 @@ function createPanelBlock(taskList) {
     panelBlock.innerHTML = 
 
 
-    `<div class="column is-5">
+    `<div class="column is-2">
          <button class="button is-rounded is-small" id="cp${taskList.name}" ></button>
     </div>
      <div class="column is-1"></div>
-     <div id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="" >
+     <div class="column is-7" id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="" >
          <p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p>
      </div>
-     <div class="column is-1">
+     <div class="column is-2">
          <button class="neonbutton selectList" id="selectLI${name}" >
-            <i class="fas fa-arrow-right"></i>
+            <i id="selectLIFAS${name}" class="fas fa-arrow-right"></i>
          </button>
      </div>`
  panelBlock.addEventListener('mouseenter', function(){
   //console.log('panel block hover');
-  panelBlock.style.borderLeftWidth = "10px";
-  panelBlock.style.borderLeft = "solid";
-  panelBlock.style.borderLeftColor= taskList.color;
+  //panelBlock.style.borderLeftWidth = "10px";
+  //panelBlock.style.borderLeft = "solid";
+  //panelBlock.style.borderLeftColor= taskList.color;
+  panelBlock.style.background =hexToRgba(taskList.color, 0.3);
   document.getElementById(`selectLI${name}`).style.visibility = "visible";
-     
+  document.getElementById(`selectLIFAS${name}`).style.textShadow = `0 0 5px ${taskList.color}`  ;
 
+  setScrollbarColors(hexToRgba(taskList.color, 0.7), hexToRgba(taskList.color, 0.3))   
+ 
      //panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}`
   })
   
   panelBlock.addEventListener('mouseleave', function(){
   //console.log('panel block leave');
   //panelBlock.style.boxShadow = `0px 0px 0px 0px ${hexToRgba(taskList.color,0.4)}`
-  panelBlock.style.borderLeft = "none";
+  //panelBlock.style.borderLeft = "none";
   document.getElementById(`selectLI${name}`).style.visibility = "hidden";
-
+  panelBlock.style.background ="transparent";
   })
   //panelBlock.style.borderColor= taskList.color;})
 
@@ -181,7 +185,7 @@ function createPanelBlock(taskList) {
 
   var cpbutton = document.getElementById(`cp${taskList.name}`);
   
-  cpbutton.style.backgroundColor= hexToRgba(taskList.color,0.3)
+  cpbutton.style.backgroundColor= hexToRgba(taskList.color,0.5)
   cpbutton.style.borderColor= taskList.color;  
   cpbutton.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}` 
   cpbutton.innerHTML = `<div id="contsel${taskList.name}" class="select is-small" style="display:none;opacity:0; "><select id="sel${taskList.name}"  ><option value="#b52828" style="background-color: #b52828;"></option>
@@ -489,6 +493,7 @@ function setScrollbarColors(thumbColor, trackColor) {
   `;
 }
 function showListColumn(){
+document.getElementById('backToListsContainer').style.display="block";
 document.getElementById('listlists').style.display = "none";    
 document.getElementById('listColumn').style.display = "block";
 
@@ -497,17 +502,72 @@ document.getElementById('listColumn').style.display = "block";
 function showListlists(){
 document.getElementById('listColumn').style.display = "none";
 document.getElementById('listlists').style.display = "block";    
-
+document.getElementById('backToListsContainer').style.display="none";
 
 }
 
 function sortByNumberAttribute(arr) {
   return arr.sort((a, b) => a.number - b.number);
 }
+
+function renderTitleHead(container,name,colore){
+  const panelBlock = document.createElement('div');
+  var name =name 
+  
+  var textCon = name;
+  panelBlock.setAttribute('data-textContent', textCon)
+  panelBlock.style.borderBottom = "none";
+  panelBlock.className = 'panel-block is-fullwidth has-text-centered has-text-black is-size-6  is-uppercase has-text-weight-bold onhoversfondo ';
+  panelBlock.style.background ="transparent";
+  //
+  panelBlock.style.outline = "none";
+  var textColor = "";
+  if (getCurrentDayTime() == "Day"){
+      textColor = "black"}
+  else if(getCurrentDayTime() == "Night"){
+       textColor = "white"}
+
+    panelBlock.innerHTML = 
+
+
+    `
+     <div class="column is-7" >
+         <p  class="my-text montserrat  ">${name}</p>
+     </div>
+    <div class="field has-addons">
+              <div class="control ">
+                <input class="inputneon input is-large mt-2" type="text" id="taskInput" placeholder="Enter task..." style="">
+              </div>
+              <div class="control">
+                     
+                <button class="neonbutton" id="addTaskButton"><i class="fas fa-plus mb-1"></i></button>
+                <!--button class="neonbutton" id="removeTaskButton"><i class="fas fa-times"></i> </button-->
+                  
+              </div> 
+    `
+ 
+  panelBlock.style.background =hexToRgba(colore, 0.3);
+  
+
+    
+      
+  var head = container;
+  console.log(head);
+  if(head){
+  head.innerHTML="";
+  head.appendChild(panelBlock);}
+  else{console.log('impossibile appendere il titolo')}
+  const addTaskButton = document.getElementById('addTaskButton');
+  addTaskButton.addEventListener('click', addTask);
+
+}
+
+
 function renderSelectedList(taskarray) {
   //const wordClock = document.getElementById('clock');
   //wordClock.style.opacity = 0;
   //wordClock.style.visibility="hidden";
+  
   var colore = getSelectedTaskList().color
   showListColumn() 
   //makeClockHorizontal(); 
@@ -516,27 +576,31 @@ function renderSelectedList(taskarray) {
   console.log(lista)
   const listColumn = document.getElementById('listColumn')
   const listContainer = document.getElementById('todoSelSubsection');
-  var coloreRgba = hexToRgba(colore,0.30)
-  listContainer.style.backgroundColor= coloreRgba;
+    var coloreRgba = hexToRgba(colore,0.30)
+  var coloreRgba1 = hexToRgba(colore,0.10)
+  listContainer.style.backgroundColor= coloreRgba1;
+  listContainer.style.backdropFilter= "blur(5px)";
   setScrollbarColors(hexToRgba(colore, 0.7),coloreRgba);
 
 // Syntax: box-shadow: h-offset v-offset blur spread color;
   //listContainer.style.boxShadow = `0px -5px 5px 0px ${hexToRgba(colore,0.3)}`;
   
   var todoSel = document.getElementById('todoSelSubsection')
-  listContainer.style.borderTopWidth= "6px";
+  //listContainer.style.borderTopWidth= "6px";
   
-  listContainer.style.borderTopColor= hexToRgba(colore,0.4);
+  //listContainer.style.borderTopColor= hexToRgba(colore,0.4);
   document.documentElement.style.scrollbarColor = colore;
 // Set the scrollbar width to thin for the whole document
   document.documentElement.style.scrollbarWidth = "thin";
   
-  listContainer.style.borderTopStyle= "solid";
+  listContainer.style.borderTopStyle= "none";
   //console.log(listContainer)
   // Clear existing list items before rendering
   listContainer.innerHTML = '';
   let counter = 0;
   listContainer.style.visibility="visible";
+  renderTitleHead(listContainer,getSelectedTaskList().name,colore);
+
   lista.forEach((task) => {
     var percLeft = calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate).percentageLeft
     
@@ -891,8 +955,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Event listener for "Add Task" button
-  const addTaskButton = document.getElementById('addTaskButton');
-  addTaskButton.addEventListener('click', addTask);
+ // const addTaskButton = document.getElementById('addTaskButton');
+  //addTaskButton.addEventListener('click', addTask);
   const backToListsButton = document.getElementById('backToLists');
   backToListsButton.addEventListener('click', function(){
      showListlists()});
