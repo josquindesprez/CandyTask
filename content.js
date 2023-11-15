@@ -126,8 +126,11 @@ function createPanelBlock(taskList) {
   panelBlock.style.outline = "none";
   panelBlock.style.direction="ltr"; 
   
-   
-
+  console.log(taskList.tasks)
+  if (taskList.name != "Tasks attive!"){
+  var number = numberOfActiveTasks(taskList)
+  console.log(`${taskList.name} has ${number} active tasks`);
+  }
   var textColor = "";
   if (getCurrentDayTime() == "Day"){
       textColor = "black"}
@@ -138,7 +141,7 @@ function createPanelBlock(taskList) {
 
 
     `<div class="column is-2">
-         <button class="button is-rounded is-small" id="cp${taskList.name}" ></button>
+         <button class="button has-text-white has-text-weight-bold montserrat is-rounded is-small" id="cp${taskList.name}" >${number}</button>
     </div>
      <div class="column is-1"></div>
      <div class="column is-7" id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="" >
@@ -188,7 +191,7 @@ function createPanelBlock(taskList) {
   cpbutton.style.backgroundColor= hexToRgba(taskList.color,0.5)
   cpbutton.style.borderColor= taskList.color;  
   cpbutton.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}` 
-  cpbutton.innerHTML = `<div id="contsel${taskList.name}" class="select is-small" style="display:none;opacity:0; "><select id="sel${taskList.name}"  ><option value="#b52828" style="background-color: #b52828;"></option>
+  cpbutton.innerHTML = `${number}<div id="contsel${taskList.name}" class="select is-small" style="display:none;opacity:0; "><select id="sel${taskList.name}"  ><option value="#b52828" style="background-color: #b52828;"></option>
                         <option value="#6e290c" style="background-color: #6e290c;"></option>
                         <option value="#f28218" style="background-color: #f28218;"></option>
                         <option value="#f0ec24" style="background-color: #f0ec24; color: black;"></option>
@@ -358,6 +361,7 @@ function retrieveStoredTaskLists() {
   if (storedTaskLists) {
     console.log(storedTaskLists);
     taskLists = JSON.parse(storedTaskLists);
+    //createPanelBlock(activeTasks);
     taskLists.forEach((taskList) => {
       createPanelBlock(taskList);
     });
