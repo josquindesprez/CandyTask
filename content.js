@@ -361,7 +361,7 @@ function retrieveStoredTaskLists() {
   if (storedTaskLists) {
     console.log(storedTaskLists);
     taskLists = JSON.parse(storedTaskLists);
-    //createPanelBlock(activeTasks);
+    createPanel4Active();
     taskLists.forEach((taskList) => {
       createPanelBlock(taskList);
     });

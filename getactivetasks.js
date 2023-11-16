@@ -15,7 +15,20 @@ list.tasks.forEach(task => {
 return number;
 }
 
+function totalNumberOfActiveTasks(){
 
+var number = 0;
+taskLists.forEach(list => {
+        // Filter the tasks to find those that have an active timer
+        list.tasks.forEach(task => {
+            if (task.timer && task.timer.endDate && isFutureDate(task.timer.endDate)) {
+                // Sum the active task to the total
+                number += 1;
+            }
+        });
+    });
+return number;
+}
 
 
 
@@ -40,7 +53,7 @@ function getActiveTasks() {
             }
         });
     });
-    activeTasks.color = "#FFF"
+    activeTasks.color = "#000"
     activeTasks.name = "Tasks attive!"
     return activeTasks;
 }
