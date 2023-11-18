@@ -3,6 +3,7 @@ function dragElement(elmnt) {
   var initialPosition = {left: 0, top: 0};
 
   elmnt.onmousedown = dragMouseDown;
+  
 
   function dragMouseDown(e) {
     e.preventDefault();

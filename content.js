@@ -112,6 +112,25 @@ function hideTimerSection() {
   timerSection.style.display = 'none';
 }
 
+
+function toggleDisplay(tD,sF) {
+    //var targetDiv = document.getElementById("targetDiv");
+    //var selectLIFA = document.getElementById("selectLIFA");
+
+    // Check if targetDiv is currently hidden
+    if (tD.style.display === "none" || tD.style.display === "") {
+        tD.style.display = "block"; // Show targetDiv
+        sF.style.display = "none"; // Hide selectLIFA
+    } else {
+        tD.style.display = "none"; // Hide targetDiv
+        sF.style.display = "block"; // Show selectLIFA
+    }
+}
+
+
+
+
+
 // Function to create a panel block for a task list
 function createPanelBlock(taskList) {
   const panelBlock = document.createElement('div');
@@ -120,6 +139,7 @@ function createPanelBlock(taskList) {
   var textCon = taskList.name;
   panelBlock.setAttribute('data-textContent', textCon)
   panelBlock.style.borderBottom = "none";
+  panelBlock.id = `dragpb${taskList.name}` 
   panelBlock.className = 'panel-block is-fullwidth has-text-centered has-text-black is-size-6  is-uppercase has-text-weight-bold onhoversfondo ';
   panelBlock.style.background ="transparent";
   //
@@ -147,16 +167,43 @@ function createPanelBlock(taskList) {
      <div class="column is-7" id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="" >
          <p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p>
      </div>
-     <div class="column is-3">
+     <div id="selDelContainer" class="column is-3">
          <button class="neonbutton selectList" id="selectLI${name}" >
             <i id="selectLIFAS${name}" class="fas fa-arrow-right"></i>
          </button>
+         <div class="column is-12" id="targetDiv${name}" style="display:none;"> <span class="trash">
+                    <span></span>
+                    <i></i>
+                    </span><div>
+         </div>
+
+
      </div>
      
      
      `
   const panel = document.getElementById('todoSubsections');
   panel.appendChild(panelBlock);
+  panelBlock.addEventListener('contextmenu', function(event) {
+    // Prevent the default context menu from appearing
+    event.preventDefault();
+    toggleDisplay(document.getElementById(`targetDiv${name}`),document.getElementById(`selectLI${name}`));
+    
+}); 
+  document.getElementById(`targetDiv${name}`).addEventListener('click',function(){
+      console.log('is clicked');
+      let attribute = id; 
+      deleteTaskListByName(attribute)
+      var todoSub = document.getElementById('todoSubsections');
+      todoSub.innerHTML=""
+      retrieveStoredTaskLists();
+
+
+  })
+
+
+
+
   panelBlock.addEventListener('mouseenter', function(){
   //console.log('panel block hover');
   //panelBlock.style.borderLeftWidth = "10px";
@@ -263,8 +310,9 @@ function createPanelBlock(taskList) {
     storeTaskLists();
     });
    
-  var dragelement = document.getElementById(`drag${name}`);
-  dragElement(dragelement);
+  //var dragelement = document.getElementById(`dragpb${name}`);
+  console.log(`dragpb${name}`)
+  //dragElement(panel);
   console.log(`dragged ${taskList.name}`);
 }  
 
