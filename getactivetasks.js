@@ -58,6 +58,20 @@ function getActiveTasks() {
     return activeTasks;
 }
 
+function displayActiveTasks(atl) {
+    let activeTasks = []
+    console.log(atl)
+    taskLists.forEach(list => {
+        if (list.name == atl){
+            list.tasks.forEach(task =>{
+            if (task.timer && task.timer.endDate && isFutureDate(task.timer.endDate)) {
+                console.log(task.name);  
+                activeTasks.push(task.name);}})}});
+   return activeTasks; 
+    
+}
+
+
 // Example usage
 const activeTasks = getActiveTasks();
 console.log(activeTasks);

@@ -11,7 +11,7 @@ function createPanel4Active() {
   //
   panelBlock.style.outline = "none";
   panelBlock.style.direction="ltr"; 
-  
+  panelBlock.style.position ="sticky"; 
   console.log(taskList.tasks)
   if (taskList.name == "Tasks attive!"){
   //var number = numberOfActiveTasks(taskList)

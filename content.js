@@ -147,12 +147,17 @@ function createPanelBlock(taskList) {
      <div class="column is-7" id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="" >
          <p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p>
      </div>
-     <div class="column is-2">
+     <div class="column is-3">
          <button class="neonbutton selectList" id="selectLI${name}" >
             <i id="selectLIFAS${name}" class="fas fa-arrow-right"></i>
          </button>
-     </div>`
- panelBlock.addEventListener('mouseenter', function(){
+     </div>
+     
+     
+     `
+  const panel = document.getElementById('todoSubsections');
+  panel.appendChild(panelBlock);
+  panelBlock.addEventListener('mouseenter', function(){
   //console.log('panel block hover');
   //panelBlock.style.borderLeftWidth = "10px";
   //panelBlock.style.borderLeft = "solid";
@@ -162,7 +167,34 @@ function createPanelBlock(taskList) {
   document.getElementById(`selectLIFAS${name}`).style.textShadow = `0 0 5px ${taskList.color}`  ;
 
   setScrollbarColors(hexToRgba(taskList.color, 0.7), hexToRgba(taskList.color, 0.3))   
- 
+  var display = document.getElementById(`drag${name}`);
+  
+  var ActiveTaskList =  displayActiveTasks(taskList.name);
+  console.log(ActiveTaskList)
+  display.style.maxHeight="100%";
+  display.style.maxWidth ="100%";
+  
+  if (ActiveTaskList.length > 0){
+  var unli = document.createElement('div');
+  display.innerHTML= ``;
+  display.appendChild(unli);
+  
+  var textActiveTasks = ""
+  ActiveTaskList.forEach(taskname =>{
+      var li = document.createElement('li')
+      li.className = "montserrat is-size-7";
+      li.style.textAlign = "left";
+      li.style.listStylePosition = "outside"; 
+      li.style.maxWidth = "100%";
+      li.style.maxHeigh = "100%";
+      //li.style.whiteSpace = "nowrap"; 
+      li.textContent = taskname;
+      
+      unli.appendChild(li);
+
+  });
+        
+      ;}
      //panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}`
   })
   
@@ -172,14 +204,15 @@ function createPanelBlock(taskList) {
   //panelBlock.style.borderLeft = "none";
   document.getElementById(`selectLI${name}`).style.visibility = "hidden";
   panelBlock.style.background ="transparent";
+  var display = document.getElementById(`drag${name}`);
+
+  display.innerHTML = `<p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p>`
   })
   //panelBlock.style.borderColor= taskList.color;})
 
   // Add event listener to select the task list when the panel block is clicked
     
-  const panel = document.getElementById('todoSubsections');
-   
-  panel.appendChild(panelBlock);
+  
   document.getElementById(`selectLI${name}`).addEventListener('click', function () {
     selectTaskList(taskList);
     console.log('click');
@@ -382,7 +415,31 @@ function deleteTaskListByName(taskListId) {
   }
 }
 
+function getTimeLeft(endDate) {
+    // Get the current date and time
+    const now = new Date();
+    const endData = new Date(endDate)
+    // Calculate the difference in milliseconds
+    const diff = endData - now;
+    console.log(`e =${endDate} n =${now} diff = ${diff}`);
+    // Convert the difference to other units
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
 
+    // Determine the largest unit of time to use
+    if (days > 0) {
+        return `${days} days left`;
+    } else if (hours > 0) {
+        return `${hours} hours left`;
+    } else if (seconds > 0) {
+        return `${seconds} seconds left`;
+    } else {
+        console.log(seconds);
+        return "Time's up!";
+    }
+}
 
 //CREATEPROGRESSBARFUNCTION
 function createProgressBar(percLeft,secondsLeft,pb,tsk) {
@@ -398,7 +455,21 @@ function createProgressBar(percLeft,secondsLeft,pb,tsk) {
       // Append the progress bar to the container
       //const container = document.getElementById('progressbarContainer');
       pb.appendChild(progressBar);
-      function updatePercValue(tsk){
+      var originalTitle = document.getElementById('titolo').innerText;
+      progressBar.addEventListener('mouseenter', function(){
+          document.getElementById('titolo').innerText = getTimeLeft(tsk.timer.endDate)
+          console.log(percLeft)
+      });
+      progressBar.addEventListener('mouseleave', function(){
+          document.getElementById('titolo').innerText = originalTitle; 
+      });
+            
+
+
+
+
+
+    function updatePercValue(tsk){
           console.log('updating progress value')
           var task = tsk;
           var newPercValue = calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate).percentageLeft 
@@ -520,8 +591,11 @@ function renderTitleHead(container,name,colore){
   
   var textCon = name;
   panelBlock.setAttribute('data-textContent', textCon)
+  panelBlock.id = "titleHead";
   panelBlock.style.borderBottom = "none";
   panelBlock.className = 'panel-block is-fullwidth has-text-centered has-text-black is-size-6  is-uppercase has-text-weight-bold onhoversfondo ';
+  panelBlock.style.position = "sticky";
+  panelBlock.style.top = "0px";
   panelBlock.style.background ="transparent";
   //
   panelBlock.style.outline = "none";
@@ -536,7 +610,7 @@ function renderTitleHead(container,name,colore){
 
     `
      <div class="column is-7" >
-         <p  class="my-text montserrat  ">${name}</p>
+         <p id="titolo" class="my-text montserrat  ">${name}</p>
      </div>
     <div class="field has-addons">
               <div class="control ">
@@ -550,7 +624,7 @@ function renderTitleHead(container,name,colore){
               </div> 
     `
  
-  panelBlock.style.background =hexToRgba(colore, 0.3);
+  panelBlock.style.background =hexToRgba(colore, 0.6);
   
 
     
@@ -558,8 +632,9 @@ function renderTitleHead(container,name,colore){
   var head = container;
   console.log(head);
   if(head){
-  head.innerHTML="";
-  head.appendChild(panelBlock);}
+  document.getElementById('todoSelSubsection').appendChild(panelBlock);}
+  //head.innerHTML="";
+  //head.appendChild(panelBlock);}
   else{console.log('impossibile appendere il titolo')}
   const addTaskButton = document.getElementById('addTaskButton');
   addTaskButton.addEventListener('click', addTask);
@@ -604,7 +679,22 @@ function renderSelectedList(taskarray) {
   let counter = 0;
   listContainer.style.visibility="visible";
   renderTitleHead(listContainer,getSelectedTaskList().name,colore);
+  var initialScrollPosition = listContainer.scrollTop; 
+  listContainer.addEventListener('scroll', function() {
+    // Get current scroll position
+    var currentScrollPosition = listContainer.scrollTop;
 
+    // Check if scrolled away from initial position
+    if (currentScrollPosition > initialScrollPosition) {
+        document.getElementById('titleHead').style.background = hexToRgba(colore,1);
+        console.log("Scrolled away from initial position in element");
+    } 
+    // Check if returned to initial position
+    else if (currentScrollPosition <= initialScrollPosition) {
+        console.log("Returned to initial position in element");
+        document.getElementById('titleHead').style.background = hexToRgba(colore,0.6);
+    }
+});
   lista.forEach((task) => {
     var percLeft = calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate).percentageLeft
     
