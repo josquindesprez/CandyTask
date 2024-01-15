@@ -5,23 +5,55 @@ document.addEventListener("DOMContentLoaded", function () {
     const sunsetStart = 18;
     const nightStart = 20;
 
-    // Get the current hour
-    const currentHour = new Date().getHours();
+    // Function to set background image based on time and location
+    function setBackgroundImage(userCountry) {
+        const currentHour = new Date().getHours();
+        let imageUrl;
 
-    // Determine the appropriate image
-    let imageUrl;
-    if (currentHour >= dawnStart && currentHour < dayStart) {
-        imageUrl = './milano/milano1.jpg';
-    } else if (currentHour >= dayStart && currentHour < sunsetStart) {
-        imageUrl = './milano/milano6.jpg';
-    } else if (currentHour >= sunsetStart && currentHour < nightStart) {
-        imageUrl = './milano/milano3.jpg';
-    } else {
-        imageUrl = './milano/milano4.jpg';
+        if (userCountry === 'Italy') {
+            // Set image URL for Italy (Milan)
+            if (currentHour >= dawnStart && currentHour < dayStart) {
+                imageUrl = './milano/milano1.jpg';
+            } else if (currentHour >= dayStart && currentHour < sunsetStart) {
+                imageUrl = './milano/milano6.jpg';
+            } else if (currentHour >= sunsetStart && currentHour < nightStart) {
+                imageUrl = './milano/milano3.jpg';
+            } else {
+                imageUrl = './milano/milano4.jpg';
+            }
+        } else {
+            // Default to Paris images if country is not Italy or location cannot be determined
+            if (currentHour >= dawnStart && currentHour < dayStart) {
+                imageUrl = './milano/parigi (1).png';
+            } else if (currentHour >= dayStart && currentHour < sunsetStart) {
+                imageUrl = './milano/parigi (2).png';
+            } else if (currentHour >= sunsetStart && currentHour < nightStart) {
+                imageUrl = './milano/parigi (3).png';
+            } else {
+                imageUrl = './milano/parigi (4).png';
+            }
+        }
+
+        // Set the background image of the body
+        document.body.style.backgroundImage = `url('${imageUrl}')`;
     }
 
-    // Set the background image of the body
-    document.body.style.backgroundImage = `url('${imageUrl}')`;
+    // Function to get user's location based on IP
+    function getUserLocation() {
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                const userCountry = data.country_name;
+                setBackgroundImage(userCountry === 'France' ? 'France' : userCountry);
+            })
+            .catch(error => {
+                console.error('Error fetching location:', error);
+                // Default to Paris images if location cannot be determined
+                setBackgroundImage('France');
+            });
+    }
+
+    getUserLocation();
 });
 
 
