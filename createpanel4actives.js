@@ -47,7 +47,7 @@ function createPanel4Active() {
   panelBlock.style.background ="transparent";
   })
   
-    
+ panelBlock.addEventListener('click', function(){showActiveCalendar()})   
   const panel = document.getElementById('todoSubsections');
    
   panel.appendChild(panelBlock);

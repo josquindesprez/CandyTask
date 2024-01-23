@@ -33,6 +33,7 @@ return number;
 
 
 // Function to get all active tasks
+/*
 function getActiveTasks() {
     // Retrieve the string from local storage
     const taskListsString = localStorage.getItem('taskLists');
@@ -45,6 +46,7 @@ function getActiveTasks() {
 
     // Iterate through each list
     taskLists.forEach(list => {
+        
         // Filter the tasks to find those that have an active timer
         list.tasks.forEach(task => {
             if (task.timer && task.timer.endDate && isFutureDate(task.timer.endDate)) {
@@ -53,6 +55,39 @@ function getActiveTasks() {
             }
         });
     });
+    activeTasks.color = "#000"
+    activeTasks.name = "Tasks attive!"
+    return activeTasks;
+}
+*/
+function getActiveTasks() {
+    // Retrieve the string from local storage
+    const taskListsString = localStorage.getItem('taskLists');
+
+    // Parse the string into a JavaScript object
+    const taskLists = JSON.parse(taskListsString);
+
+    // Array to store active tasks
+    let activeTasks = [];
+
+    // Iterate through each list
+    taskLists.forEach(list => {
+        
+        // Filter the tasks to find those that have an active timer
+        list.tasks.forEach(task => {
+            if (task.timer && task.timer.endDate && isFutureDate(task.timer.endDate)) {
+                // Create a new object that includes the task and the list's color
+                const taskWithColor = {
+                    ...task, 
+                    listColor: list.color // Adding list color to the task
+                };
+
+                // Add the task with color to the array
+                activeTasks.push(taskWithColor);
+            }
+        });
+    });
+
     activeTasks.color = "#000"
     activeTasks.name = "Tasks attive!"
     return activeTasks;

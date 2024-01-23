@@ -1,0 +1,67 @@
+#calendarDiv{
+    /* Adjust the background color and transparency */
+    background-color: rgba(255,255,255, 0.7); /* White with 30% opacity */
+    
+    /* Apply a blur effect */
+    backdrop-filter: blur(10px); /* Adjust the pixel value to increase/decrease blur */
+
+    /* Optional: Border and padding for better appearance */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /*padding: 10px;*/
+    overflow:auto; 
+    height: 100%;
+    width:100%;
+    /* Additional styles for positioning and size */
+    /* ... */
+}
+.fc-view-harness{
+   overflow:auto;
+
+}
+
+.fc-daygrid-day-number, .fc-col-header-cell-cushion {
+    color: black; /* Replace with your desired color */
+    font-family: 'Montserrat', serif;
+    font-weight: bold;
+}
+
+.fc-day-today .fc-daygrid-day-number {
+     /* Replace with your desired color */
+}
+
+.fc-event-title{
+
+    color: black; /* Replace with your desired color */
+    font-family: 'Montserrat', serif;
+    font-weight: bold;
+}
+
+.fc .fc-daygrid-body .fc-daygrid-day {
+    border-color: grey; /* This will make the borders invisible */
+}
+
+.fc .fc-timegrid .fc-timegrid-slots {
+    border-width: 1px; /* This removes the border */
+}
+
+.fc-toolbar-title{
+    color: black; /* Replace with your desired color */
+    font-family: 'Montserrat', serif;
+    font-weight: bold;
+
+
+}
+
+.fc-today-button{
+   background-color:white !important;
+   border-color:black !important;
+   color:black !important;
+   font-weight:bold !important;
+}
+
+.fc-button{
+   background-color:white !important;
+   border-color:black !important;
+   color:black !important;
+   font-weight:bold !important;
+}

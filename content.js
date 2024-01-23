@@ -647,18 +647,72 @@ function setScrollbarColors(thumbColor, trackColor) {
     ::-webkit-scrollbar-track { background: ${trackColor} !important; }
   `;
 }
+
+function renderCalendar() {
+    var calendarDiv = document.getElementById('calendarDiv');
+    var existingCalendar = document.getElementById('calendar');
+
+    // Check if the calendar already exists
+    if (!existingCalendar) {
+        var caldiv = document.createElement('div');
+        caldiv.id = "calendar";
+        caldiv.className = "column is-12"; // Use className instead of class
+        calendarDiv.appendChild(caldiv);
+    }
+
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'it',
+    });
+
+    // Retrieve active tasks
+    const activeTasks = getActiveTasks();
+
+    // Add each task as an event to the calendar
+    activeTasks.forEach(task => {
+        const endDate = new Date(task.timer.endDate);
+        const formattedDate = endDate.toISOString().split('T')[0];
+
+        calendar.addEvent({
+            title: task.name, // or any other property that represents the task's title
+            start: formattedDate, // Set the start date of the event
+            color: task.listColor // Set the color of the event (optional)
+        });
+    });
+
+    calendar.render();
+}
+
+
+
+
 function showListColumn(){
+document.getElementById('calendarDiv').style.display="none"
+document.getElementById('listlists').style.display = "none";
 document.getElementById('backToListsContainer').style.display="block";
-document.getElementById('listlists').style.display = "none";    
 document.getElementById('listColumn').style.display = "block";
 
 
 }
-function showListlists(){
+function showActiveCalendar(){
+ 
+document.getElementById('listlists').style.display = "none";    
 document.getElementById('listColumn').style.display = "none";
+document.getElementById('backToListsContainer').style.display="block";
+document.getElementById('calendarDiv').style.display="block";
+
+renderCalendar()
+
+}   
+function showListlists(){
+//document.getElementById('todoSelSubsection').style.visibility="hidden";
+document.getElementById('listColumn').style.display = "none";
+
+
 document.getElementById('listlists').style.display = "block";    
 document.getElementById('backToListsContainer').style.display="none";
-
+document.getElementById('calendarDiv').style.display = "none";
 }
 
 function sortByNumberAttribute(arr) {

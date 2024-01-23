@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">      
   <link rel="stylesheet" href="scrollbar.css">      
   <link rel="stylesheet" href="stile.css">
+  <link rel="stylesheet" href="calendar.css">
   <script src="addnumbers.js"></script>
   <script src="getactivetasks.js"></script>
   <!--link rel="stylesheet" href="style.css"-->
@@ -22,8 +23,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Emilys+Candy&family=Permanent+Marker&family=Tilt+Prism&display=swap" rel="stylesheet"> 
  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
-
-
+ <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+   
 
  
 </head>
@@ -33,7 +34,8 @@
 <section id="popup" class="section popup ">
  <div id="backToListsContainer" style="display:none;">
               <button class="neonbutton" id="backToLists"><i class="fas fa-arrow-left"></i></button>
-          </div>   
+              </div>
+<!--div id="calendarDiv" style="display:none;height:auto" class="column is-12 m-3"></div-->
 <!-- Add the modal with input fields -->
 <div class="modal emilys has-text-white" id="timerModal">
   <div class="modal-background"></div>
@@ -97,7 +99,8 @@
               <article class="panel has-text-centered is-trasparent" id="panel" >
                 <!--p class="panel-heading is-trasparent  has-text-centered"-->
                   <button id="addTaskList" class=" is-trasparent is-uppercase  neueneon" >Lists</button>
-                <!--/p-->
+                  <!--/p-->
+                
                 <div id="todoSubsections" class="has-text-centered mt-5 scroll1" style="background-color:trasparent;box-shadow:none; outline:none;border:none;max-height:400px;overflow:auto;direction:rtl;backdrop-filter: blur(5px);"></div>
                 <div class="column is-12" id="targetDiv" style="visibility:hidden;"> <span class="trash">
                     <span></span>
@@ -109,23 +112,14 @@
                 <!--div class="column is-1"></div-->
             </div>
           </a>
-          
+          <div id="calendarDiv" style="display:none;height:auto" class="column is-12 m-3"></div>
           <div id="listColumn" class="column is-12 scroll1" style="display:none;">
-              <!--button class="neonbutton" id="backToLists"><i class="fas fa-arrow-left"></i></button-->
-
-              <!--div class="field has-addons">
-              <div class="control">
-                <input class="inputneon" type="text" id="taskInput" placeholder="Enter task..." style="backdrop-filter: blur(5px);">
-              </div>
-              <div class="control">
-                     
-                <button class="neonbutton" id="addTaskButton"><i class="fas fa-plus mb-1"></i></button>
-                                  
-              </div>
-            </div-->
+              
+              
+            
             <div id="todoSelSubsection" class= "scroll1"  style="visibility: hidden !important;">
                 <div id="contTitle" class="column is-12"></div>   
-              
+                <!--div id="calendar" class="column is-12 m-4" style="display:none;"></div-->       
  
             </div>
           </div>
