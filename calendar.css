@@ -65,3 +65,14 @@
    color:black !important;
    font-weight:bold !important;
 }
+
+.highlighted-day {
+    background-color: #ffe135;
+    font-size: 1.2em;
+    border: 2px solid #ffa500;
+    z-index: 1;
+    position: relative;
+    width:100px !important;
+    height:100px !important;
+}
+

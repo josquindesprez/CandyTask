@@ -24,13 +24,13 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             // Default to Paris images if country is not Italy or location cannot be determined
             if (currentHour >= dawnStart && currentHour < dayStart) {
-                imageUrl = './milano/parigi (1).png';
+                imageUrl = './milano/parisdawn.jpg';
             } else if (currentHour >= dayStart && currentHour < sunsetStart) {
-                imageUrl = './milano/parigi (2).png';
+                imageUrl = './milano/parisday.jpg';
             } else if (currentHour >= sunsetStart && currentHour < nightStart) {
-                imageUrl = './milano/parigi (3).png';
+                imageUrl = './milano/parissunset2.jpg';
             } else {
-                imageUrl = './milano/parigi (4).png';
+                imageUrl = './milano/parisnight.jpg';
             }
         }
 
@@ -664,6 +664,7 @@ function renderCalendar() {
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'it',
+        
     });
 
     // Retrieve active tasks
