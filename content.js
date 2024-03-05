@@ -648,7 +648,7 @@ function setScrollbarColors(thumbColor, trackColor) {
   `;
 }
 
-function renderCalendar() {
+/*function renderCalendar() {
     var calendarDiv = document.getElementById('calendarDiv');
     var existingCalendar = document.getElementById('calendar');
 
@@ -679,6 +679,68 @@ function renderCalendar() {
             title: task.name, // or any other property that represents the task's title
             start: formattedDate, // Set the start date of the event
             color: task.listColor // Set the color of the event (optional)
+        });
+    });
+
+    calendar.render();
+}*/
+
+function renderCalendar() {
+    var calendarDiv = document.getElementById('calendarDiv');
+    var existingCalendar = document.getElementById('calendar');
+
+    // Check if the calendar already exists
+    if (existingCalendar) {
+        existingCalendar.remove(); // Remove the existing calendar if it's already there
+    }
+
+    var caldiv = document.createElement('div');
+    caldiv.id = "calendar";
+    caldiv.className = "column is-12";
+    calendarDiv.appendChild(caldiv);
+
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'it',
+        eventMouseEnter: function(mouseEnterInfo) {
+            // Create a tooltip element
+            var tooltip = document.createElement('div');
+            tooltip.className = 'calendar-tooltip';
+            tooltip.innerHTML = mouseEnterInfo.event.title;
+            tooltip.style.position = 'absolute';
+            tooltip.style.top = (mouseEnterInfo.jsEvent.pageY + 10) + 'px'; // Offset by 10px
+            tooltip.style.left = (mouseEnterInfo.jsEvent.pageX + 10) + 'px'; // Offset by 10px
+            tooltip.style.backgroundColor = 'white';
+            tooltip.style.border = '1px solid #000';
+            tooltip.style.borderRadius = '4px';
+            tooltip.style.padding = '5px';
+            tooltip.style.pointerEvents = 'none'; // Ensure the tooltip doesn't block mouse events
+            tooltip.style.zIndex = '100';
+            document.body.appendChild(tooltip);
+        },
+        eventMouseLeave: function(mouseLeaveInfo) {
+            // Remove the tooltip element when mouse leaves
+            var tooltips = document.getElementsByClassName('calendar-tooltip');
+            while (tooltips.length > 0) {
+                tooltips[0].parentNode.removeChild(tooltips[0]);
+            }
+        },
+        // other FullCalendar options...
+    });
+
+    // Retrieve active tasks
+    const activeTasks = getActiveTasks();
+
+    // Add each task as an event to the calendar
+    activeTasks.forEach(task => {
+        const endDate = new Date(task.timer.endDate);
+        const formattedDate = endDate.toISOString().split('T')[0];
+
+        calendar.addEvent({
+            title: task.name, // Any other property that represents the task's title
+            start: formattedDate, // Set the start date of the event
+            color: task.listColor, // Set the color of the event (optional)
         });
     });
 
