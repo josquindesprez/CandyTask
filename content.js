@@ -628,6 +628,26 @@ function removeTaskFromList(taskToRemove) {
 }
 
 
+function renameTask(task,newName) {
+    const selectedTaskList = getSelectedTaskList();
+    if (!selectedTaskList) {
+        console.error("No task list selected.");
+        return;
+    }
+
+    else {
+        console.log(newName);
+        task.name = newName;
+        storeTaskLists(); 
+        //selectedTaskList.task.name = newName 
+        //storeTaskLists();  // Store the updated task lists in the browser's local storage
+    
+}
+}
+
+
+
+
 // Function to create or update a style element for the scrollbar thumb and track
 function setScrollbarColors(thumbColor, trackColor) {
   // Check if the style element already exists
@@ -904,13 +924,26 @@ function renderSelectedList(taskarray) {
     var iconaClessidra = document.createElement('i')
     var deleteButtContainer = document.createElement('div')
     var progressBarContainer = document.createElement('div')
-    var deleteButton = document.createElement('button') 
+    var deleteButton = document.createElement('button')
+    var renameButton = document.createElement('button')    
+    var newNameInput = document.createElement('input')
+
+
+
     progressBarContainer.className="column is-4 is-child progressBarContainer";
     deleteButtContainer.className="column is-2 is-child deleteButtContainer"; 
     deleteButton.className="bottonePin fas fa-trash fa-2x1"
     deleteButton.style.backgroundColor= "rgba(255,255,255,0)"
     deleteButton.style.visibility ="hidden";
     deleteButton.style.border = "none";
+    renameButton.className = "bottoneRename fas fa-pen fa-2x1"
+    renameButton.style.backgroundColor= "rgba(255,255,255,0)"
+    renameButton.style.visibility ="hidden";
+    renameButton.style.border = "none";
+    newNameInput.className ="input is-black montserrat has-text-black has-text-weight-bold is-small"
+    newNameInput.style.display="none";
+    newNameInput.placeholder="nuovo nome della task?"
+    newNameInput.style.backgroundColor="rgba(255,255,255,0.5)"
     taskItem.className="columns mt-5";
     
     if (getCurrentDayTime() == "Day"){ 
@@ -941,6 +974,7 @@ function renderSelectedList(taskarray) {
     listContainer.appendChild(taskItem);
     taskItem.appendChild(pinButtonContainer);
     taskItem.appendChild(taskName);
+    taskItem.appendChild(newNameInput);
     //taskItem.appendChild(buttonContainer);
     taskItem.appendChild(progressBarContainer);
     taskItem.appendChild(deleteButtContainer);
@@ -989,7 +1023,7 @@ function renderSelectedList(taskarray) {
     })
 
     deleteButtContainer.appendChild(deleteButton);
-     
+    deleteButtContainer.appendChild(renameButton); 
     deleteButton.addEventListener('click', function (event) {
     // Prevent the event from propagating up and triggering other event listeners
     //event.stopPropagation();
@@ -997,15 +1031,44 @@ function renderSelectedList(taskarray) {
     // Re-render the list of tasks
     renderSelectedList(lista);
 });
+    
+    renameButton.addEventListener('click', function(){
+
+     if (newNameInput.style.display === 'block') {
+    // If it's visible, hide it
+    
+    if (newNameInput.value.length>0){
+    renameTask(task,newNameInput.value)
+    
+    taskName.textContent = newNameInput.value;
+    newNameInput.style.display = 'none';
+    taskName.style.display="block";}
+      else{ alert('inserisci un nome!')}
+  } else {
+    taskName.style.display="none";
+    // If it's hidden, make it visible
+    newNameInput.style.display = 'block';
+    
+  }
+ 
+
+
+
+    })
+
+
+
 
     taskItem.addEventListener('mouseenter', function(){
     pinButton.style.visibility = "visible";
     deleteButton.style.visibility="visible";
+    renameButton.style.visibility="visible";
     console.log('taskItem enter');
     });
     taskItem.addEventListener('mouseleave',function(){
     pinButton.style.visibility ="hidden";
     deleteButton.style.visibility="hidden";
+    renameButton.style.visibility="hidden";
     });
     var percLeft = calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate).percentageLeft
     var secondsLeft = calculateTimeLeftAndPercentage( task.timer.startDate, task.timer.endDate).secondsLeft

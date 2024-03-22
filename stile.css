@@ -422,7 +422,11 @@ background-color: transparent !important;
 border:none;
 outline:none;
 }
-
+.bottoneRename{
+background-color: transparent !important;
+border:none;
+outline:none;
+}
 #listlists{
   overflow: auto;
 
