@@ -178,10 +178,10 @@ function createPanelBlock(taskList) {
   panelBlock.style.outline = "none";
   panelBlock.style.direction="ltr"; 
   
-  console.log(taskList.tasks)
+  
   if (taskList.name != "Tasks attive!"){
   var number = numberOfActiveTasks(taskList)
-  console.log(`${taskList.name} has ${number} active tasks`);
+  
   }
   var textColor = "";
   if (getCurrentDayTime() == "Day"){
@@ -223,7 +223,7 @@ function createPanelBlock(taskList) {
     
 }); 
   document.getElementById(`targetDiv${name}`).addEventListener('click',function(){
-      console.log('is clicked');
+      
       let attribute = id; 
       deleteTaskListByName(attribute)
       var todoSub = document.getElementById('todoSubsections');
@@ -237,7 +237,7 @@ function createPanelBlock(taskList) {
 
 
   panelBlock.addEventListener('mouseenter', function(){
-  //console.log('panel block hover');
+  //
   //panelBlock.style.borderLeftWidth = "10px";
   //panelBlock.style.borderLeft = "solid";
   //panelBlock.style.borderLeftColor= taskList.color;
@@ -249,7 +249,7 @@ function createPanelBlock(taskList) {
   var display = document.getElementById(`drag${name}`);
   
   var ActiveTaskList =  displayActiveTasks(taskList.name);
-  console.log(ActiveTaskList)
+  
   display.style.maxHeight="100%";
   display.style.maxWidth ="100%";
   
@@ -278,7 +278,7 @@ function createPanelBlock(taskList) {
   })
   
   panelBlock.addEventListener('mouseleave', function(){
-  //console.log('panel block leave');
+  //
   //panelBlock.style.boxShadow = `0px 0px 0px 0px ${hexToRgba(taskList.color,0.4)}`
   //panelBlock.style.borderLeft = "none";
   document.getElementById(`selectLI${name}`).style.visibility = "hidden";
@@ -294,7 +294,7 @@ function createPanelBlock(taskList) {
   
   document.getElementById(`selectLI${name}`).addEventListener('click', function () {
     selectTaskList(taskList);
-    console.log('click');
+    
   });
   
 
@@ -327,8 +327,7 @@ function createPanelBlock(taskList) {
     cpbutton.style.backgroundColor= hexToRgba(this.value,0.3)
     cpbutton.style.borderColor= this.value;  
     cpbutton.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(this.value,0.4)}`
-    console.log(this.value)
-    //panelBlock.style.borderColor= this.value;  
+        //panelBlock.style.borderColor= this.value;  
     //panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(this.value,0.4)}`
     var todoSel = document.getElementById('todoSelSubsection')
     todoSel.style.borderTopWidth= "6px";
@@ -338,14 +337,13 @@ function createPanelBlock(taskList) {
     todoSel.style.backgroundColor = `${this.value}80` 
     taskList.color = this.value;
     const taskListString = JSON.stringify(taskList);
-    console.log(`the color is ${taskList.color}`); 
+     
     storeTaskLists();
     });
    
   //var dragelement = document.getElementById(`dragpb${name}`);
-  console.log(`dragpb${name}`)
-  //dragElement(panel);
-  console.log(`dragged ${taskList.name}`);
+    //dragElement(panel);
+  
 }  
 
 
@@ -369,7 +367,7 @@ function selectTaskList(taskList) {
   
   // Add the 'is-active' class to the selected panel block
   const selectedPanelBlock = panelBlocks.find((panelBlock) => panelBlock.getAttribute('data-textContent') === taskList.name);
-  console.log(selectedPanelBlock)
+  
   if (selectedPanelBlock) {
     selectedPanelBlock.classList.add('is-active');
      
@@ -436,7 +434,7 @@ function addTaskList() {
   const timerLink = document.getElementById('timerLink');
   const isTodoActive = todoLink.classList.contains('is-active');
   const id = generateUniqueID()
-  console.log(`id is ${id}`)
+  
   // Create a new task list object
   const newTaskList = {
     name: taskListName,
@@ -472,7 +470,7 @@ function storeTaskLists() {
 function retrieveStoredTaskLists() {
   const storedTaskLists = localStorage.getItem('taskLists');
   if (storedTaskLists) {
-    console.log(storedTaskLists);
+    
     taskLists = JSON.parse(storedTaskLists);
     createPanel4Active();
     taskLists.forEach((taskList) => {
@@ -501,7 +499,7 @@ function getTimeLeft(endDate) {
     const endData = new Date(endDate)
     // Calculate the difference in milliseconds
     const diff = endData - now;
-    console.log(`e =${endDate} n =${now} diff = ${diff}`);
+    
     // Convert the difference to other units
     const seconds = Math.floor(diff / 1000);
     const minutes = Math.floor(seconds / 60);
@@ -516,7 +514,7 @@ function getTimeLeft(endDate) {
     } else if (seconds > 0) {
         return `${seconds} seconds left`;
     } else {
-        console.log(seconds);
+        
         return "Time's up!";
     }
 }
@@ -538,7 +536,7 @@ function createProgressBar(percLeft,secondsLeft,pb,tsk) {
       var originalTitle = document.getElementById('titolo').innerText;
       progressBar.addEventListener('mouseenter', function(){
           document.getElementById('titolo').innerText = getTimeLeft(tsk.timer.endDate)
-          console.log(percLeft)
+          
       });
       progressBar.addEventListener('mouseleave', function(){
           document.getElementById('titolo').innerText = originalTitle; 
@@ -550,7 +548,7 @@ function createProgressBar(percLeft,secondsLeft,pb,tsk) {
 
 
     function updatePercValue(tsk){
-          console.log('updating progress value')
+          
           var task = tsk;
           var newPercValue = calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate).percentageLeft 
           
@@ -575,7 +573,7 @@ function createProgressBar(percLeft,secondsLeft,pb,tsk) {
 
 function submitTimer () {
     
-    console.log(`submitimer is submitting to ${tvalue}`)
+    
     const dateExpiryAndCurrent = calculateExpiryDate()
     const startDate = dateExpiryAndCurrent.currentDate;
     const endDate = dateExpiryAndCurrent.expiryDate;
@@ -584,7 +582,7 @@ function submitTimer () {
     const selectedlist = getSelectedTaskList()
      
     const selectedTask = selectedlist.tasks[tvalue];
-    console.log(`selected Task is ${selectedTask.name}`); 
+     
      
   // Create a new timer object
   const newTimer = {
@@ -636,7 +634,7 @@ function renameTask(task,newName) {
     }
 
     else {
-        console.log(newName);
+        
         task.name = newName;
         storeTaskLists(); 
         //selectedTaskList.task.name = newName 
@@ -847,7 +845,7 @@ function renderTitleHead(container,name,colore){
     
       
   var head = container;
-  console.log(head);
+  
   if(head){
   document.getElementById('todoSelSubsection').appendChild(panelBlock);}
   //head.innerHTML="";
@@ -868,11 +866,10 @@ function renderSelectedList(taskarray) {
   showListColumn() 
   //makeClockHorizontal(); 
   const lista = taskarray;
-  console.log(sortByNumberAttribute(lista))
-  console.log(lista)
+  
   const listColumn = document.getElementById('listColumn')
   const listContainer = document.getElementById('todoSelSubsection');
-    var coloreRgba = hexToRgba(colore,0.30)
+  var coloreRgba = hexToRgba(colore,0.30)
   var coloreRgba1 = hexToRgba(colore,0.10)
   listContainer.style.backgroundColor= coloreRgba1;
   listContainer.style.backdropFilter= "blur(5px)";
@@ -904,11 +901,11 @@ function renderSelectedList(taskarray) {
     // Check if scrolled away from initial position
     if (currentScrollPosition > initialScrollPosition) {
         document.getElementById('titleHead').style.background = hexToRgba(colore,1);
-        console.log("Scrolled away from initial position in element");
+        
     } 
     // Check if returned to initial position
     else if (currentScrollPosition <= initialScrollPosition) {
-        console.log("Returned to initial position in element");
+        
         document.getElementById('titleHead').style.background = hexToRgba(colore,0.6);
     }
 });
@@ -944,8 +941,9 @@ function renderSelectedList(taskarray) {
     newNameInput.style.display="none";
     newNameInput.placeholder="nuovo nome della task?"
     newNameInput.style.backgroundColor="rgba(255,255,255,0.5)"
-    taskItem.className="columns mt-5";
-    
+    taskItem.className="columns mt-5 draggable";
+    taskItem.setAttribute('data-name', task.name); 
+    taskItem.setAttribute('draggable', 'true');
     if (getCurrentDayTime() == "Day"){ 
     taskName.className ="column montserrat is-4 is-parent is-vcentered has-text-left has-text-black has-text-weight-bold ml-4";}
     else if (getCurrentDayTime() == "Night") {
@@ -957,8 +955,8 @@ function renderSelectedList(taskarray) {
 // Add bounce animation on hover
     taskName.addEventListener('mouseenter', () => {
       taskName.classList.add('animate__animated', 'animate__pulse');
-      console.log(`${task.name} tvalue is ${taskName.value} and has ${percLeft}% left`);
-      console.log(taskName.id)
+      //
+      //console.log(taskName.id)
       //console.log(task)
     });
 
@@ -998,7 +996,7 @@ function renderSelectedList(taskarray) {
       if (lista[i].name === task.name) {
         lista[i].number = 1;
         foundIndex = i;
-        console.log(`found ${task.name}`) 
+        //console.log(`found ${task.name}`) 
         break; // Stop the loop once we've found the object
       }
     }
@@ -1013,10 +1011,10 @@ function renderSelectedList(taskarray) {
         }
       } 
     } else {
-      console.log(`No object with taskName '${task.name}' found.`);
+      //
     } 
       lista.sort((a, b) => a.number - b.number);  
-      console.log(lista)
+      //console.log(lista)
       storeTaskLists();
       renderSelectedList(lista)
 
@@ -1063,7 +1061,7 @@ function renderSelectedList(taskarray) {
     pinButton.style.visibility = "visible";
     deleteButton.style.visibility="visible";
     renameButton.style.visibility="visible";
-    console.log('taskItem enter');
+    //
     });
     taskItem.addEventListener('mouseleave',function(){
     pinButton.style.visibility ="hidden";
@@ -1086,7 +1084,7 @@ listContainer.style.overflow="hidden auto";
     
     //var tvalue = parseInt(counter);
     counter += 1;
-    taskName.addEventListener('click', function (){console.log(taskName);console.log(calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate))})
+    taskName.addEventListener('click', function (){console.log(calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate))})
     //var taskValue = addTimerButton.value;
      
     //progressBarContainer.appendChild(timerProgressBar);
@@ -1096,7 +1094,7 @@ listContainer.style.overflow="hidden auto";
     //addTimerButton.addEventListener('click', function () {
     taskName.addEventListener('click',function(){
     tvalue=taskName.value;
-    console.log(`tvalue is ${tvalue}`)
+    //console.log(`tvalue is ${tvalue}`)
     const modal = document.getElementById('timerModal')
     modal.classList.add('is-active');
     //const TaskValue = tvalue;
@@ -1111,16 +1109,18 @@ listContainer.style.overflow="hidden auto";
     var cltp = calculateTimeLeftAndPercentage(task.timer.startDate, task.timer.endDate);
     if (!isNaN(cltp.percentageLeft) || cltp.percentageLeft > 0){
      
-    console.log(`left percentage of ${task.name} is ${cltp.secondsLeft}`) 
+    //console.log(`left percentage of ${task.name} is ${cltp.secondsLeft}`) 
         }}
     catch(e){
-        console.log(e);}
+        }
      
     
     
   });
-
-
+    
+   makeDraggable(lista)
+   
+   
 }
 
 
@@ -1150,8 +1150,8 @@ function calculateExpiryDate() {
   const expiryTimestamp = currentTimestamp + (days * 24 * 60 * 60 * 1000) + (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000);
   const expiryDate = new Date(expiryTimestamp);
 
-  console.log('Current Date:', currentDate);
-  console.log('Expiry Date:', expiryDate);
+  //
+  //
           
   return {
     currentDate: currentDate,
@@ -1227,6 +1227,7 @@ function addTask() {
     //updateSubsections();
     taskInput.value = "";
     storeTaskLists();
+    
     renderSelectedList(selectedTaskList.tasks)
   }
 }
@@ -1256,7 +1257,7 @@ function deleteTaskList(taskListName) {
 
     // Update the local storage with the modified array
     storeTaskLists();
-    console.log(`Task list "${taskListName}" was deleted.`);
+    
   } else {
     console.error(`No task list found with the name "${taskListName}".`);
   }
