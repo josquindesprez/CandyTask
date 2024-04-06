@@ -197,19 +197,22 @@ function createPanelBlock(taskList) {
     </div>
      <div class="column is-1"></div>
      <div class="column is-7" id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="" >
-         <p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p>
+         <label  class="my-text montserrat has-text-${textColor} has-text-alert" id="listLabel${name}">${taskList.name}</label>
+         <input id="newname${name}" class="input is-black montserrat has-text-black has-text-weight-bold is-small" style="display:none"></input> 
      </div>
      <div id="selDelContainer" class="column is-3">
          <button class="neonbutton selectList" id="selectLI${name}" >
             <i id="selectLIFAS${name}" class="fas fa-arrow-right"></i>
          </button>
-         <div class="column is-12" id="targetDiv${name}" style="display:none;"> <span class="trash">
+     <div class="column is-12" id="targetDiv${name}" style="display:none;">    
+         <div class="column is-12" id="trash${name}" style=""> <span class="trash">
+                    
                     <span></span>
                     <i></i>
-                    </span><div>
+                    </span>
          </div>
-
-
+         <button  class="bottoneListRename fas fa-pen" id="bottoneListRename${name}" style="background-color:transparent;border:none"></button> 
+        </div> 
      </div>
      
      
@@ -222,7 +225,7 @@ function createPanelBlock(taskList) {
     toggleDisplay(document.getElementById(`targetDiv${name}`),document.getElementById(`selectLI${name}`));
     
 }); 
-  document.getElementById(`targetDiv${name}`).addEventListener('click',function(){
+  document.getElementById(`trash${name}`).addEventListener('click',function(){
       
       let attribute = id; 
       deleteTaskListByName(attribute)
@@ -234,7 +237,41 @@ function createPanelBlock(taskList) {
   })
 
 
+ document.getElementById(`bottoneListRename${name}`).addEventListener('mouseover', function() {
+    this.classList.add('animate__animated', 'animate__swing');
+  });
 
+  document.getElementById(`bottoneListRename${name}`).addEventListener('animationend', function() {
+    this.classList.remove('animate__animated', 'animate__swing');
+  });
+document.getElementById(`bottoneListRename${name}`).addEventListener('click', function(){
+    event.preventDefault()
+    console.log('rename')
+})
+
+document.getElementById(`bottoneListRename${name}`).addEventListener('click', function(){
+     var inpNewListName = document.getElementById(`newname${name}`)
+     document.getElementById(`listLabel${name}`).style.display="none";
+     
+    if (inpNewListName.style.display !== 'block'){
+        console.log('inp is not block');
+        inpNewListName.style.display = "block";   
+
+    } 
+    if (inpNewListName.style.display === 'block') {
+    // If it's visible, hide it
+     
+    if (inpNewListName.value.length>0){
+       //rename and reload
+        var newName = inpNewListName.value;
+        renameTaskListByName(taskList.id, newName)
+        location.reload()
+    }
+      else{ alert('inserisci un nome!')}
+  } 
+ 
+})
+  
 
   panelBlock.addEventListener('mouseenter', function(){
   //
@@ -478,6 +515,26 @@ function retrieveStoredTaskLists() {
     });
   }
 }
+
+function renameTaskListByName(taskListId, newName) {
+  const storedTaskLists = localStorage.getItem('taskLists');
+  if (storedTaskLists) {
+    let taskLists = JSON.parse(storedTaskLists);
+
+    // Update the name of the task list with the specified ID
+    taskLists = taskLists.map(taskList => {
+      if (taskList.id === taskListId) {
+        return {...taskList, name: newName};
+      }
+      return taskList;
+    });
+
+    // Store the updated task lists back in local storage
+    localStorage.setItem('taskLists', JSON.stringify(taskLists));
+  }
+}
+
+
 
 function deleteTaskListByName(taskListId) {
   
@@ -924,7 +981,8 @@ function renderSelectedList(taskarray) {
     var deleteButton = document.createElement('button')
     var renameButton = document.createElement('button')    
     var newNameInput = document.createElement('input')
-
+    var checkBoxContainer = document.createElement('div')
+    var checkBox = document.createElement('input')
 
 
     progressBarContainer.className="column is-4 is-child progressBarContainer";
@@ -939,8 +997,11 @@ function renderSelectedList(taskarray) {
     renameButton.style.border = "none";
     newNameInput.className ="input is-black montserrat has-text-black has-text-weight-bold is-small"
     newNameInput.style.display="none";
-    newNameInput.placeholder="nuovo nome della task?"
+    newNameInput.value= task.name;
+    
     newNameInput.style.backgroundColor="rgba(255,255,255,0.5)"
+    checkBox.type = "checkbox"
+    checkBox.style.visibility = "visible";
     taskItem.className="columns mt-5 draggable";
     taskItem.setAttribute('data-name', task.name); 
     taskItem.setAttribute('draggable', 'true');
@@ -970,13 +1031,14 @@ function renderSelectedList(taskarray) {
     //iconaClessidra.className = "fas fa-hourglass";
     
     listContainer.appendChild(taskItem);
-    taskItem.appendChild(pinButtonContainer);
+     
     taskItem.appendChild(taskName);
+    taskItem.appendChild(checkBox);
     taskItem.appendChild(newNameInput);
     //taskItem.appendChild(buttonContainer);
     taskItem.appendChild(progressBarContainer);
     taskItem.appendChild(deleteButtContainer);
-    
+    taskItem.appendChild(pinButtonContainer);
     pinButtonContainer.appendChild(pinButton);
     pinButtonContainer.className="column is-1";
     pinButtonContainer.style.outline ="none";
@@ -1034,7 +1096,7 @@ function renderSelectedList(taskarray) {
 
      if (newNameInput.style.display === 'block') {
     // If it's visible, hide it
-    
+     
     if (newNameInput.value.length>0){
     renameTask(task,newNameInput.value)
     
@@ -1058,12 +1120,14 @@ function renderSelectedList(taskarray) {
 
 
     taskItem.addEventListener('mouseenter', function(){
+    checkBox.style.visibility ="visible";
     pinButton.style.visibility = "visible";
     deleteButton.style.visibility="visible";
     renameButton.style.visibility="visible";
     //
     });
     taskItem.addEventListener('mouseleave',function(){
+    checkBox.style.visibility ="hidden";
     pinButton.style.visibility ="hidden";
     deleteButton.style.visibility="hidden";
     renameButton.style.visibility="hidden";
@@ -1246,6 +1310,9 @@ function removeTask() {
     storeTaskLists();
   }
 }
+
+
+
 
 function deleteTaskList(taskListName) {
   // Find the index of the task list with the specified name

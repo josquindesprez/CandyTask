@@ -432,6 +432,12 @@ outline:none;
 
 }
 
+.bottoneListRename{
+background-color: transparent !important;
+border:none;
+outline:none;
+
+}
 
 .calendar-tooltip {
   position: absolute;
