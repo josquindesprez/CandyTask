@@ -166,7 +166,7 @@ function toggleDisplay(tD,sF) {
 // Function to create a panel block for a task list
 function createPanelBlock(taskList) {
   const panelBlock = document.createElement('div');
-  var name = `dbc${taskList.name}`
+  let name = `dbc${taskList.name}`
   var id = `${taskList.id}`
   var textCon = taskList.name;
   panelBlock.setAttribute('data-textContent', textCon)
@@ -197,8 +197,9 @@ function createPanelBlock(taskList) {
     </div>
      <div class="column is-1"></div>
      <div class="column is-7" id="drag${name}" data-bin-value="${name}" data-custom-value="${id}" style="" >
-         <label  class="my-text montserrat has-text-${textColor} has-text-alert" id="listLabel${name}">${taskList.name}</label>
-         <input id="newname${name}" class="input is-black montserrat has-text-black has-text-weight-bold is-small" style="display:none"></input> 
+         <label id="listLabel${name}" class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</label>
+         <input id="newname${name}" value="${taskList.name}" class="input is-black montserrat has-text-black has-text-weight-bold is-small" style="display:none"></input> 
+         
      </div>
      <div id="selDelContainer" class="column is-3">
          <button class="neonbutton selectList" id="selectLI${name}" >
@@ -211,7 +212,7 @@ function createPanelBlock(taskList) {
                     <i></i>
                     </span>
          </div>
-         <button  class="bottoneListRename fas fa-pen" id="bottoneListRename${name}" style="background-color:transparent;border:none"></button> 
+         <button  class="bottoneListRename${name} fas fa-pen" id="bottoneListRename${name}" style="background-color:transparent;border:none"></button> 
         </div> 
      </div>
      
@@ -244,28 +245,34 @@ function createPanelBlock(taskList) {
   document.getElementById(`bottoneListRename${name}`).addEventListener('animationend', function() {
     this.classList.remove('animate__animated', 'animate__swing');
   });
-document.getElementById(`bottoneListRename${name}`).addEventListener('click', function(){
+/*document.getElementById(`bottoneListRename${name}`).addEventListener('click', function(){
     event.preventDefault()
     console.log('rename')
-})
+})*/
 
 document.getElementById(`bottoneListRename${name}`).addEventListener('click', function(){
+     event.preventDefault()
      var inpNewListName = document.getElementById(`newname${name}`)
+      
      document.getElementById(`listLabel${name}`).style.display="none";
-     
+      
     if (inpNewListName.style.display !== 'block'){
         console.log('inp is not block');
         inpNewListName.style.display = "block";   
-
+            
     } 
-    if (inpNewListName.style.display === 'block') {
+    else if (inpNewListName.style.display === 'block') {
     // If it's visible, hide it
      
     if (inpNewListName.value.length>0){
        //rename and reload
         var newName = inpNewListName.value;
         renameTaskListByName(taskList.id, newName)
-        location.reload()
+        var todoSub = document.getElementById('todoSubsections');
+        todoSub.innerHTML=""
+        retrieveStoredTaskLists();
+        
+         
     }
       else{ alert('inserisci un nome!')}
   } 
@@ -321,8 +328,36 @@ document.getElementById(`bottoneListRename${name}`).addEventListener('click', fu
   document.getElementById(`selectLI${name}`).style.visibility = "hidden";
   panelBlock.style.background ="transparent";
   var display = document.getElementById(`drag${name}`);
+  var inpNewListName = document.getElementById(`newname${name}`)
+  if (inpNewListName.style.display === 'block') {
+    // If it's visible, hide it
+     
+    if (inpNewListName.value.length>0){
+       //rename and reload
+        var newName = inpNewListName.value;
+        renameTaskListByName(taskList.id, newName)
+        var todoSub = document.getElementById('todoSubsections');
+        todoSub.innerHTML=""
+        retrieveStoredTaskLists();
+        
+         
+    }
+      else{ 
+        var newName = "Non mi hai dato un nome!";
+        renameTaskListByName(taskList.id, newName)
+        var todoSub = document.getElementById('todoSubsections');
+        todoSub.innerHTML=""
+        retrieveStoredTaskLists();
 
-  display.innerHTML = `<p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p>`
+
+      }
+  }
+
+
+
+
+
+  //display.innerHTML = `<p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p>`
   })
   //panelBlock.style.borderColor= taskList.color;})
 
