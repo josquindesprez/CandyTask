@@ -1087,7 +1087,25 @@ function renderSelectedList(taskarray) {
     newNameInput.style.display = 'block';
     
   }
- 
+   newNameInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        console.log('enter')
+        // Verifica se l'input è visibile e il suo valore è valido
+        if (newNameInput.style.display === 'block' && newNameInput.value.trim().length > 0) {
+            // Simula il click sul bottone
+            //document.getElementById(`bottoneListRename${name}`).click();
+            renameTask(task,newNameInput.value)
+            taskName.textContent = newNameInput.value;
+            newNameInput.style.display = 'none';
+            taskName.style.display="block";
+        }
+        else if(newNameInput.style.display === 'block' && newNameInput.value.trim().length === 0){
+            alert('inserisci un nome!')
+    }   
+
+            }
+    }
+);
 
 
 
