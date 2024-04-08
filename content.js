@@ -94,21 +94,7 @@ var todoSS = document.getElementById('todoSubsections');
 var addTL = document.getElementById('addTaskList');
 
 
-/*
-panel.addEventListener('mouseenter', function(){
-   
-    
-   var todoSS = document.getElementById('todoSubsections');
-   todoSS.style.visibility = 'visible';
-});
 
-panel.addEventListener('mouseleave', function(){
-   
-   var todoSS = document.getElementById('todoSubsections');
-   todoSS.style.visibility = 'hidden';
-   
-
-});*/
 
 addTL.addEventListener('mouseover', function(){ 
     addTL.innerHTML ="Add!";
@@ -146,8 +132,7 @@ function hideTimerSection() {
 
 
 function toggleDisplay(tD,sF) {
-    //var targetDiv = document.getElementById("targetDiv");
-    //var selectLIFA = document.getElementById("selectLIFA");
+    
 
     // Check if targetDiv is currently hidden
     if (tD.style.display === "none" || tD.style.display === "") {
@@ -223,6 +208,13 @@ function createPanelBlock(taskList) {
   panelBlock.addEventListener('contextmenu', function(event) {
     // Prevent the default context menu from appearing
     event.preventDefault();
+    document.getElementById(`selectLI${name}`).style.visibility = "hidden";
+    panelBlock.style.background ="transparent";
+
+    var display = document.getElementById(`drag${name}`);
+    display.innerHTML = `<label id="listLabel${name}" class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</label>
+                         <input id="newname${name}" value="${taskList.name}" class="input is-black montserrat has-text-black has-text-weight-bold is-small" style="display:none"></input> 
+` 
     toggleDisplay(document.getElementById(`targetDiv${name}`),document.getElementById(`selectLI${name}`));
     
 }); 
@@ -245,15 +237,13 @@ function createPanelBlock(taskList) {
   document.getElementById(`bottoneListRename${name}`).addEventListener('animationend', function() {
     this.classList.remove('animate__animated', 'animate__swing');
   });
-/*document.getElementById(`bottoneListRename${name}`).addEventListener('click', function(){
-    event.preventDefault()
-    console.log('rename')
-})*/
+
 
 document.getElementById(`bottoneListRename${name}`).addEventListener('click', function(){
      event.preventDefault()
      var inpNewListName = document.getElementById(`newname${name}`)
-      
+     
+    
      document.getElementById(`listLabel${name}`).style.display="none";
       
     if (inpNewListName.style.display !== 'block'){
@@ -276,20 +266,31 @@ document.getElementById(`bottoneListRename${name}`).addEventListener('click', fu
     }
       else{ alert('inserisci un nome!')}
   } 
- 
+
+// Aggiungi un event listener per la pressione del tasto "Enter"
+  document.getElementById(`newname${name}`).addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        console.log('enter')
+        // Verifica se l'input è visibile e il suo valore è valido
+        if (inpNewListName.style.display === 'block' && inpNewListName.value.trim().length > 0) {
+            // Simula il click sul bottone
+            //document.getElementById(`bottoneListRename${name}`).click();
+            var newName = inpNewListName.value;
+        renameTaskListByName(taskList.id, newName)
+        var todoSub = document.getElementById('todoSubsections');
+        todoSub.innerHTML=""
+        retrieveStoredTaskLists();
+            }
+    }
+});
 })
-  
 
-  panelBlock.addEventListener('mouseenter', function(){
-  //
-  //panelBlock.style.borderLeftWidth = "10px";
-  //panelBlock.style.borderLeft = "solid";
-  //panelBlock.style.borderLeftColor= taskList.color;
-  panelBlock.style.background =hexToRgba(taskList.color, 0.3);
-  document.getElementById(`selectLI${name}`).style.visibility = "visible";
-  document.getElementById(`selectLIFAS${name}`).style.textShadow = `0 0 5px ${taskList.color}`  ;
 
-  setScrollbarColors(hexToRgba(taskList.color, 0.7), hexToRgba(taskList.color, 0.3))   
+
+
+  var selectLiArrow = document.getElementById(`selectLI${name}`);
+
+  selectLiArrow.addEventListener('mouseenter', function(){
   var display = document.getElementById(`drag${name}`);
   
   var ActiveTaskList =  displayActiveTasks(taskList.name);
@@ -310,59 +311,48 @@ document.getElementById(`bottoneListRename${name}`).addEventListener('click', fu
       li.style.listStylePosition = "outside"; 
       li.style.maxWidth = "100%";
       li.style.maxHeigh = "100%";
-      //li.style.whiteSpace = "nowrap"; 
+       
       li.textContent = taskname;
       
       unli.appendChild(li);
 
   });
         
-      ;}
-     //panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(taskList.color,0.4)}`
+      ;} 
+
+console.log("CIAAAAAAO")
+  })
+selectLiArrow.addEventListener('mouseleave', function(){
+
+var display = document.getElementById(`drag${name}`);
+display.innerHTML = `<label id="listLabel${name}" class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</label>
+         <input id="newname${name}" value="${taskList.name}" class="input is-black montserrat has-text-black has-text-weight-bold is-small" style="display:none"></input> 
+`
+})
+
+  panelBlock.addEventListener('mouseenter', function(){
+  
+  panelBlock.style.background =hexToRgba(taskList.color, 0.3);
+  document.getElementById(`selectLI${name}`).style.visibility = "visible";
+  document.getElementById(`selectLIFAS${name}`).style.textShadow = `0 0 5px ${taskList.color}`  ;
+
+  setScrollbarColors(hexToRgba(taskList.color, 0.7), hexToRgba(taskList.color, 0.3))   
+  
+     
   })
   
   panelBlock.addEventListener('mouseleave', function(){
-  //
-  //panelBlock.style.boxShadow = `0px 0px 0px 0px ${hexToRgba(taskList.color,0.4)}`
-  //panelBlock.style.borderLeft = "none";
+  
   document.getElementById(`selectLI${name}`).style.visibility = "hidden";
   panelBlock.style.background ="transparent";
   var display = document.getElementById(`drag${name}`);
-  var inpNewListName = document.getElementById(`newname${name}`)
-  if (inpNewListName.style.display === 'block') {
-    // If it's visible, hide it
-     
-    if (inpNewListName.value.length>0){
-       //rename and reload
-        var newName = inpNewListName.value;
-        renameTaskListByName(taskList.id, newName)
-        var todoSub = document.getElementById('todoSubsections');
-        todoSub.innerHTML=""
-        retrieveStoredTaskLists();
-        
-         
-    }
-      else{ 
-        var newName = "Non mi hai dato un nome!";
-        renameTaskListByName(taskList.id, newName)
-        var todoSub = document.getElementById('todoSubsections');
-        todoSub.innerHTML=""
-        retrieveStoredTaskLists();
+  
+console.log('leave')
 
-
-      }
-  }
-
-
-
-
-
-  //display.innerHTML = `<p  class="my-text montserrat has-text-${textColor} has-text-alert">${taskList.name}</p>`
+  
   })
-  //panelBlock.style.borderColor= taskList.color;})
-
-  // Add event listener to select the task list when the panel block is clicked
-    
+  
+  
   
   document.getElementById(`selectLI${name}`).addEventListener('click', function () {
     selectTaskList(taskList);
@@ -395,12 +385,10 @@ document.getElementById(`bottoneListRename${name}`).addEventListener('click', fu
    });
    
     document.getElementById(`sel${taskList.name}`).addEventListener('change', function() {
-    //cpbutton.style.backgroundColor = this.value;
+    
     cpbutton.style.backgroundColor= hexToRgba(this.value,0.3)
     cpbutton.style.borderColor= this.value;  
     cpbutton.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(this.value,0.4)}`
-        //panelBlock.style.borderColor= this.value;  
-    //panelBlock.style.boxShadow = `0px 0px 5px 1px ${hexToRgba(this.value,0.4)}`
     var todoSel = document.getElementById('todoSelSubsection')
     todoSel.style.borderTopWidth= "6px";
     todoSel.style.borderTopColor= this.value;
@@ -413,8 +401,7 @@ document.getElementById(`bottoneListRename${name}`).addEventListener('click', fu
     storeTaskLists();
     });
    
-  //var dragelement = document.getElementById(`dragpb${name}`);
-    //dragElement(panel);
+  
   
 }  
 
@@ -460,17 +447,7 @@ function selectTaskList(taskList) {
     
   }
 
-  // Update the selected task list
-  /*const todoLink = document.getElementById('todoLink');
-  const timerLink = document.getElementById('timerLink');
-
-  if (taskList.type === 'todo') {
-    todoLink.classList.add('is-active');
-    timerLink.classList.remove('is-active');
-  } else {
-    todoLink.classList.remove('is-active');
-    timerLink.classList.add('is-active');
-  }*/
+  
 }
 
 
@@ -758,42 +735,7 @@ function setScrollbarColors(thumbColor, trackColor) {
   `;
 }
 
-/*function renderCalendar() {
-    var calendarDiv = document.getElementById('calendarDiv');
-    var existingCalendar = document.getElementById('calendar');
 
-    // Check if the calendar already exists
-    if (!existingCalendar) {
-        var caldiv = document.createElement('div');
-        caldiv.id = "calendar";
-        caldiv.className = "column is-12"; // Use className instead of class
-        calendarDiv.appendChild(caldiv);
-    }
-
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'it',
-        
-    });
-
-    // Retrieve active tasks
-    const activeTasks = getActiveTasks();
-
-    // Add each task as an event to the calendar
-    activeTasks.forEach(task => {
-        const endDate = new Date(task.timer.endDate);
-        const formattedDate = endDate.toISOString().split('T')[0];
-
-        calendar.addEvent({
-            title: task.name, // or any other property that represents the task's title
-            start: formattedDate, // Set the start date of the event
-            color: task.listColor // Set the color of the event (optional)
-        });
-    });
-
-    calendar.render();
-}*/
 
 function renderCalendar() {
     var calendarDiv = document.getElementById('calendarDiv');
@@ -1068,7 +1010,7 @@ function renderSelectedList(taskarray) {
     listContainer.appendChild(taskItem);
      
     taskItem.appendChild(taskName);
-    taskItem.appendChild(checkBox);
+    //taskItem.appendChild(checkBox); CHECKBOX CURRENTLY NOT APPENDED
     taskItem.appendChild(newNameInput);
     //taskItem.appendChild(buttonContainer);
     taskItem.appendChild(progressBarContainer);
